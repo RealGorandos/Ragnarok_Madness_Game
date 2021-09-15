@@ -2,7 +2,8 @@ package ragmad.graphics.sprite;
 
 
 public enum Sprite {
-	DESERT_TILE_1(SpriteSheet.DESERT_SHEET, 0, 0, 64, 32);
+	DESERT_TILE_1(SpriteSheet.DESERT_SHEET, 0, 0, 64, 32),
+	DESERT_TILE_2(SpriteSheet.DESERT_SHEET, 0, 1, 64, 32);;
 	
 	
 	

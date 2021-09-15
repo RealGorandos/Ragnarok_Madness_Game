@@ -40,6 +40,10 @@ public class GameCanvas extends Canvas {
 	 * Rendering the canvas with the new image
 	 * */
 	public void render() {
+
+		
+		
+		
 		BufferStrategy bfr = this.getBufferStrategy(); 		// Return the currently used buffer strategy
 		try {
 			if(bfr == null) { 
@@ -52,11 +56,14 @@ public class GameCanvas extends Canvas {
 			return;
 		}
 		
-		
 		/*Copying the GameEngine pixels to the image pixels (Acting as a buffer)*/
 		int[] ge_pixels = GameEngine.pixels;
-		for(int i = 0; i  < ge_pixels.length ; i++) 
-			this.pixels[i] = ge_pixels[i];
+		
+		
+		for(int i = 0; i  < ge_pixels.length ; i++) {
+			this.pixels[i] = ge_pixels[i]; // assigning a new value to it
+		}
+			
 		
 		/*	Drawing the Image to the canvas	*/
 		Graphics g = bfr.getDrawGraphics();

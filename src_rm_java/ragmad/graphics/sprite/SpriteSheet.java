@@ -36,7 +36,6 @@ public enum SpriteSheet {
 			this.height = image.getHeight();
 			tempPixels = new int[this.width * this.height];
 			image.getRGB(0, 0, this.width, this.height, tempPixels, 0, this.width);
-			
 			System.out.println("A spritesheet has been loaded!");
 		} catch (IOException e) {
 			System.out.println("Can't find file: " + path);

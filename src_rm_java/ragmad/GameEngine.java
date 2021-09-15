@@ -51,7 +51,7 @@ public class GameEngine implements Runnable {
 	private void update() {
 		if (Keyboard.esc()) 			
 			this.paused = !this.paused;
-		if (this.paused && !(this.currentScene instanceof MainMenu)) { 
+		if (this.paused && !(currentScene instanceof MainMenu)) { 
 			System.out.println("game paused");
 			return;
 		}
@@ -63,9 +63,9 @@ public class GameEngine implements Runnable {
 	/**
 	 * A rendering function called per frame
 	 */
-	private void render() {
-		for(int i = 0; i < pixels.length; i++) { pixels[i] = 0xff000000; } // Use Binary values with alpha channel set to 255 (0xff)
-		this.currentScene.render(); // TESTING
+	private synchronized void render() {
+		for(int i =0 ;i < pixels.length ; i++) {pixels[i] = 0xff87CEEB;}
+		currentScene.render(); 
 		this.window.render();
 	}
 	
@@ -131,7 +131,7 @@ public class GameEngine implements Runnable {
 	 * Every game component and object should access this pixels array freely.
 	 * @return - The pixels array in which game components should render into. It will be copied to the GameCanvas Image
 	 */
-	public static int[] getPixels() {
+	public static synchronized int[] getPixels() {
 		return pixels;
 	}
 	
@@ -139,7 +139,7 @@ public class GameEngine implements Runnable {
 	public static int getHeight() {return m_height;}
 	
 	
-	public static void ChangeScene() {
+	public static synchronized void ChangeScene() {
 		currentScene = new GameScene();
 	}
 	
