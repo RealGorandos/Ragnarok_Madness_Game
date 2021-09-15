@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 
 import ragmad.io.Keyboard;
 import ragmad.scenes.Scene;
+import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.mainmenu.MainMenu;
 
 public class GameEngine implements Runnable {
@@ -38,6 +39,7 @@ public class GameEngine implements Runnable {
 		String background_path = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\main_menu_temp.jpg";	// TESTING
 		currentScene = new MainMenu(m_width, m_height, background_path);	// TESTING
 		
+		
 	}
 	
 	
@@ -62,9 +64,7 @@ public class GameEngine implements Runnable {
 	 * A rendering function called per frame
 	 */
 	private void render() {
-		for(int i = 0; i < pixels.length; i++) {
-			pixels[i] = 0; ///clearing the screen for the next Background
-		}
+		for(int i = 0; i < pixels.length; i++) { pixels[i] = 0xff000000; } // Use Binary values with alpha channel set to 255 (0xff)
 		this.currentScene.render(); // TESTING
 		this.window.render();
 	}
@@ -135,9 +135,12 @@ public class GameEngine implements Runnable {
 		return pixels;
 	}
 	
+	public static int getWidth() {return m_width;}
+	public static int getHeight() {return m_height;}
+	
 	
 	public static void ChangeScene() {
-		System.out.println("Scene changed");
+		currentScene = new GameScene();
 	}
 	
 }

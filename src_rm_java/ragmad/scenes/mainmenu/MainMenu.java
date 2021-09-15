@@ -94,7 +94,7 @@ public class MainMenu implements Scene {
 	}
 	
 	
-	
+	 
 	
 	/*
 	 * This update is only for testing purposes.. In the future it should contain which button is hovered and which button is pressed.
