@@ -6,6 +6,7 @@ import ragmad.io.Keyboard;
 import ragmad.scenes.Scene;
 import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.mainmenu.MainMenu;
+import ragmad.sound_engine.Sound;
 
 public class GameEngine implements Runnable {
 	
@@ -14,6 +15,8 @@ public class GameEngine implements Runnable {
 	private static Scene currentScene; 
 	
 	public static int[] pixels; 	// Every class should use this pixels to render!!
+	
+	public static Sound soundEngine;
 	
 	private Thread thread;
 	private boolean running;
@@ -35,6 +38,7 @@ public class GameEngine implements Runnable {
 		window = new GameWindow(m_width, m_height);
 		pixels = new int[m_width*m_height];
 		this.m_height = m_height;
+		soundEngine = new Sound();
 		this.m_width = m_width;
 		String background_path = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\main_menu_temp.jpg";	// TESTING
 		currentScene = new MainMenu(m_width, m_height, background_path);	// TESTING
@@ -77,6 +81,8 @@ public class GameEngine implements Runnable {
 		running = true;
 		thread = new Thread(this,"Display");
 		thread.start();
+		soundEngine.start();
+		//GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//got.wav", 7000);
 	}
 	
 	

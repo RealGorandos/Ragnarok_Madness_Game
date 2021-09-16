@@ -41,13 +41,12 @@ public class MainMenu implements Scene {
 		this.m_height = m_height;
 		this.m_width = m_width;
 		
+		
 		this.background = new BufferedImage(m_width, m_height,  BufferedImage.TYPE_INT_ARGB);	// Storing the settings,
 		this.pixels = ((DataBufferInt)this.background.getRaster().getDataBuffer()).getData();
 		
 		this.backgroundImage = new BufferedImage(m_width, m_height,  BufferedImage.TYPE_INT_ARGB); // The scene background image buffer
 		
-		music = new Sound(); 
-		music.setMenuMusic(".//ragmad//sound_engine//themes//got.wav");
 		Image img = null;
 		try{
 			 img = ImageIO.read(new File(url));
@@ -56,8 +55,9 @@ public class MainMenu implements Scene {
 			System.out.println("File does not exist");
 			return;
 		}
-		
+
 		initOptions();
+		GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//got.wav", 1000,true);
 		
 	}
 	
@@ -128,9 +128,8 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
+			GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//button_sound.wav", 0, false);
 			GameEngine.ChangeScene();
-			music.stopMenuMusic();
-			music.buttonSound();
 			
 			break;
 		case 1: 
