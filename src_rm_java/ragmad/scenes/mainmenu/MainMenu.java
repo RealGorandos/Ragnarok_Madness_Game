@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import ragmad.GameEngine;
 import ragmad.io.Mouse;
 import ragmad.scenes.Scene;
+import ragmad.sound_engine.*;
 
 public class MainMenu implements Scene {
 	
@@ -28,7 +29,7 @@ public class MainMenu implements Scene {
 	private BufferedImage backgroundImage;
 	
 	private Choice[] options;
-	
+	private Sound music;
 	
 	/**
 	 * 
@@ -45,6 +46,8 @@ public class MainMenu implements Scene {
 		
 		this.backgroundImage = new BufferedImage(m_width, m_height,  BufferedImage.TYPE_INT_ARGB); // The scene background image buffer
 		
+		music = new Sound(); 
+		music.setMenuMusic(".//ragmad//sound_engine//themes//got.wav");
 		Image img = null;
 		try{
 			 img = ImageIO.read(new File(url));
@@ -101,6 +104,7 @@ public class MainMenu implements Scene {
 	 * */
 	@Override
 	public void update() {
+		
 		for(int i = 0 ; i < this.options.length; i++) {
 			if(this.options[i].frame.contains(new Point(Mouse.x,Mouse.y))) {
 				this.options[i].hovered = true;
@@ -125,11 +129,16 @@ public class MainMenu implements Scene {
 		switch(choice) {
 		case 0:
 			GameEngine.ChangeScene();
+			music.stopMenuMusic();
+			music.buttonSound();
+			
 			break;
 		case 1: 
 			break;
 		case 2: 
+			
 			System.exit(0);
+			
 			break;
 		default:
 			break;
@@ -146,6 +155,7 @@ public class MainMenu implements Scene {
 		renderBackground();
 		renderButtons();
 		
+		//music.play();
 		int[] engineRaster = GameEngine.getPixels();
 		for(int i = 0; i < this.m_width * this.m_height; i++)
 			engineRaster[i] = pixels[i];
