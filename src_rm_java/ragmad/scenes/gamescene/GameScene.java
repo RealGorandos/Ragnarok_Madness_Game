@@ -2,18 +2,32 @@ package ragmad.scenes.gamescene;
 
 import ragmad.GameEngine;
 import ragmad.graphics.sprite.Sprite;
+import ragmad.io.Keyboard;
+import ragmad.io.Mouse;
 import ragmad.scenes.Scene;
 
 
 
 public class GameScene implements Scene{
-		
-	public final static int SCALING = 1;  // Change it if you want to see different scalings. 
 	
+	
+	int xOffset, yOffset;
+	private Keyboard key;
+	public final static int SCALING = 1;  // Change it if you want to see different scalings. 
+	int xCord;
+	int yCord;
 	
 	/// _________________________ Constructor Area_________________________________
 	
 	///...
+	public GameScene() {
+		key = new Keyboard();
+		xCord = 0;
+		yCord = 0;
+		xOffset = 0;	//The camera shifting ratio at x
+		yOffset = 0;	//The camera shifting ratio at y
+	}
+	
 	///...
 	
 	///___________________________ GameEngine component methods area ______________
@@ -30,8 +44,12 @@ public class GameScene implements Scene{
 	 */
 	@Override
 	public void render() {
-		int xCord = -1;
-		int yCord = 7;
+		
+		if(key.isUp()) yOffset++;
+		if(key.isDown()) yOffset--;
+		if(key.isRight()) xOffset--;
+		if(key.isLeft()) xOffset++;
+		
 		renderTile(Sprite.DESERT_TILE_1, xCord - 1, yCord);
 		renderTile(Sprite.DESERT_TILE_1, xCord + 1, yCord);
 		
@@ -47,6 +65,16 @@ public class GameScene implements Scene{
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///________________________________________________________________________________
 	/**
 	 * The Isometric space looks as follows:
 	 *   x++
@@ -71,14 +99,14 @@ public class GameScene implements Scene{
 		int s_width_half = s_width >> 1;
 
 		for(int y = 0 ;y <s_height; y++) {
-			int yy = y - xCord * s_height_half + yCord * s_height_half;   //Mapping coordinates space to the GameEngine pixel Space (Raster space)
-			if( yy > GameEngine.getHeight()) break;
+			int yy = y - xCord * s_height_half + yCord * s_height_half + yOffset;   //Mapping coordinates space to the GameEngine pixel Space (Raster space) //yOffset for vertical movement
+			if( yy >= GameEngine.getHeight()) break;
 			if(yy < 0) continue;
 			for(int x = 0 ; x < s_width; x++) {
-				int xx = x + xCord*s_width_half + yCord*s_width_half; // mapping
+				int xx = x + xCord*s_width_half + yCord*s_width_half + xOffset; // mapping // xOffset for horizontal movement 
 				int col = tilePixels[x/SCALING + (y/SCALING) * sprite.getWidth()]; // getting the pixel colour of the tile
 				
-				if ( xx > GameEngine.getWidth() ) // break if the renderer pointer has exited screen right side
+				if ( xx >= GameEngine.getWidth() ) // break if the renderer pointer has exited screen right side
 					break;
 				if( xx < 0 || (col & 0xff000000) == 0 )  //don't do anything if the xx is out of bounds or pixel is transparent 
 					continue;
@@ -111,10 +139,10 @@ public class GameScene implements Scene{
 		int s_width_half = s_width >> 1; // half sprite scaled width
 		
 		for(int y = 0 ;y < s_height; y++) {
-			int yy = y - xCord * s_height_half + yCord * s_height_half - zPixels;
+			int yy = y - xCord * s_height_half + yCord * s_height_half - zPixels + yOffset;
 			
 			/*Height boundaries checking*/
-			if( yy > GameEngine.getHeight()) 
+			if( yy >= GameEngine.getHeight()) 
 				break;
 			if(yy < 0) 
 				continue;
@@ -122,10 +150,10 @@ public class GameScene implements Scene{
 			
 			for(int x = 0 ; x < s_width; x++) {
 				int col = tilePixels[ x/SCALING + (y/SCALING) * sprite.getWidth() ];
-				int xx = x + xCord * s_width_half + yCord * s_width_half;
+				int xx = x + xCord * s_width_half + yCord * s_width_half + xOffset;
 				
 				/*width boundaries checking*/
-				if ( xx > GameEngine.getWidth() ) // break if the renderer pointer has exited screen right side
+				if ( xx >= GameEngine.getWidth() ) // break if the renderer pointer has exited screen right side
 					break;
 				if( xx < 0 || (col & 0xff000000) == 0 )  //don't do anything if the xx is out of bounds or pixel is transparent 
 					continue;
