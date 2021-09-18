@@ -16,6 +16,8 @@ public class GameEngine implements Runnable {
 	
 	public static int[] pixels; 	// Every class should use this pixels to render!!
 	
+	public static double delta;
+	
 	public static Sound soundEngine;
 	
 	private Thread thread;
@@ -42,7 +44,7 @@ public class GameEngine implements Runnable {
 		this.m_width = m_width;
 		String background_path = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\main_menu_temp.jpg";	// TESTING
 		currentScene = new MainMenu(m_width, m_height, background_path);	// TESTING
-		
+		delta = 0;
 		
 	}
 	
@@ -93,7 +95,7 @@ public class GameEngine implements Runnable {
 		long prevTime = System.nanoTime(); //Storing the time before looping
 		long timer = System.currentTimeMillis();
 		final double nanoSec = 1000000000.0 / 60.0;
-		double delta = 0; 
+		delta = 0; 
 		
 		int fps = 0;
 		while(running) {
@@ -106,6 +108,7 @@ public class GameEngine implements Runnable {
 				this.update();
 				this.render();
 				fps++;
+				
 				delta--;
 			}
 			

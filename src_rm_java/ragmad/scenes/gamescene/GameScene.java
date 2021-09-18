@@ -5,7 +5,7 @@ import ragmad.graphics.sprite.Sprite;
 import ragmad.io.Keyboard;
 import ragmad.io.Mouse;
 import ragmad.scenes.Scene;
-
+import java.lang.Math;
 
 
 public class GameScene implements Scene{
@@ -16,16 +16,18 @@ public class GameScene implements Scene{
 	public final static int SCALING = 1;  // Change it if you want to see different scalings. 
 	int xCord;
 	int yCord;
-	
+	int frameMovement;
 	/// _________________________ Constructor Area_________________________________
 	
 	///...
 	public GameScene() {
 		key = new Keyboard();
+		
 		xCord = 0;
 		yCord = 0;
 		xOffset = 0;	//The camera shifting ratio at x
 		yOffset = 0;	//The camera shifting ratio at y
+
 	}
 	
 	///...
@@ -36,6 +38,7 @@ public class GameScene implements Scene{
 	 */
 	@Override
 	public void update() {
+		
 	}
 
 	
@@ -44,11 +47,11 @@ public class GameScene implements Scene{
 	 */
 	@Override
 	public void render() {
-		
-		if(key.isUp()) yOffset++;
-		if(key.isDown()) yOffset--;
-		if(key.isRight()) xOffset--;
-		if(key.isLeft()) xOffset++;
+		frameMovement = (int)(10.0 *  (GameEngine.delta));
+		if(key.isUp()) {yOffset += frameMovement;}
+		if(key.isDown()) {yOffset -= frameMovement;}
+		if(key.isRight()) {xOffset-= frameMovement;}
+		if(key.isLeft()) {xOffset += frameMovement;}
 		
 		renderTile(Sprite.DESERT_TILE_1, xCord - 1, yCord);
 		renderTile(Sprite.DESERT_TILE_1, xCord + 1, yCord);
