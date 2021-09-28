@@ -14,11 +14,9 @@ public class GameEngine implements Runnable {
 	
 	private static Scene currentScene; 
 	
-	public static int[] pixels; 	// Every class should use this pixels to render!!
-	
-	public static double delta;
-	
-	public static Sound soundEngine;
+	private static int[] pixels; 	// Every class should use this pixels to render!!
+	private static double delta;
+	private static Sound soundEngine;
 	
 	private Thread thread;
 	private boolean running;
@@ -72,7 +70,10 @@ public class GameEngine implements Runnable {
 	private synchronized void render() {
 		for(int i =0 ;i < pixels.length ; i++) {pixels[i] = 0xff87CEEB;}
 		currentScene.render(); 
-		this.window.render();
+		
+		
+		
+		this.window.render(); // draw the pixels that we have currently to the window
 	}
 	
 	
@@ -108,14 +109,13 @@ public class GameEngine implements Runnable {
 				this.update();
 				this.render();
 				fps++;
-				
 				delta--;
 			}
 			
 			//Show the result after completing 1 sec to measure the fps
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer+= 1000; //To keep tracking with real time process shifting (It is not accurate 100%)
-				System.out.println(fps + " updates");
+				//System.out.println(fps + " updates");
 				fps = 0;
 			}
 		 }
@@ -135,21 +135,23 @@ public class GameEngine implements Runnable {
 	}
 	
 	
+	
+	public static synchronized void ChangeScene() {
+		String mapPath = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\map1.png";
+		currentScene = new GameScene(m_width, m_height,mapPath);
+		
+	}
+	
+	
 //------------------- Getters Area -----------------------
 	/**
 	 * Every game component and object should access this pixels array freely.
 	 * @return - The pixels array in which game components should render into. It will be copied to the GameCanvas Image
 	 */
-	public static synchronized int[] getPixels() {
-		return pixels;
-	}
-	
-	public static int getWidth() {return m_width;}
-	public static int getHeight() {return m_height;}
-	
-	
-	public static synchronized void ChangeScene() {
-		currentScene = new GameScene();
-	}
+	public static synchronized int[] GetPixels() {return pixels;}
+	public static int GetWidth() {return m_width;}
+	public static int GetHeight() {return m_height;}
+	public static double GetDelta()  {return delta;}
+	public static Sound GetSoundEngine() {return soundEngine;}
 	
 }

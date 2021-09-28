@@ -57,7 +57,7 @@ public class MainMenu implements Scene {
 		}
 
 		initOptions();
-		GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//got.wav", 1000,true);
+		GameEngine.GetSoundEngine().updateAudio(".//ragmad//sound_engine//themes//got.wav", 1000,true);
 		
 	}
 	
@@ -128,7 +128,7 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//button_sound.wav", 0, false);
+			GameEngine.GetSoundEngine().updateAudio(".//ragmad//sound_engine//themes//button_sound.wav", 0, false);
 			GameEngine.ChangeScene();
 			
 			break;
@@ -155,7 +155,7 @@ public class MainMenu implements Scene {
 		renderButtons();
 		
 		//music.play();
-		int[] engineRaster = GameEngine.getPixels();
+		int[] engineRaster = GameEngine.GetPixels();
 		for(int i = 0; i < this.m_width * this.m_height; i++)
 			engineRaster[i] = pixels[i];
 		

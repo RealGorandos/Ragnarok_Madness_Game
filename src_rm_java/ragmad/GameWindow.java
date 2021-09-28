@@ -52,10 +52,6 @@ public class GameWindow extends JFrame{
 	 */
 	public void update() {
 		gc.update();
-		if(Keyboard.isUp()) System.out.println("yes it is up"); ///! For testing.. Keyboard update should exists but upudated only in 1 place!!!
-		if(Keyboard.isDown()) System.out.println("yes it is down"); ///! For testing.. Keyboard update should exists but upudated only in 1 place!!!
-		if(Keyboard.isLeft()) System.out.println("yes it is left"); ///! For testing.. Keyboard update should exists but upudated only in 1 place!!!
-		if(Keyboard.isRight()) System.out.println("yes it is right"); ///! For testing.. Keyboard update should exists but upudated only in 1 place!!!
 	}
 	
 	
