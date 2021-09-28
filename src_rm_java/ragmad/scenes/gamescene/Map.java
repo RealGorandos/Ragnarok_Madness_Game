@@ -70,9 +70,9 @@ public class Map {
 
         var tilesInColumn = getTilesInColumn(columnNo);
         
-        System.out.println("__________________________________");
+        //System.out.println("__________________________________");
         int[] exactTile = findExactTile(mouseX, mouseY, tilesInColumn, firstTileXShiftAtScreen, firstTileYShiftAtScreenAt0Height, tileWidth,tileHeight);
-        System.out.println("__________________________________");
+        //System.out.println("__________________________________");
         
         
         if(exactTile == null) return null;
@@ -157,7 +157,7 @@ public class Map {
 	        	int[] ret = new int[2];
 	        	ret[0] = tileInfoX;
 	        	ret[1] = tileInfoY;
-	        	System.out.println("Current hovered tile is: " + tileInfoX + ", " + tileInfoY); // FOR TESTING
+	        	//System.out.println("Current hovered tile is: " + tileInfoX + ", " + tileInfoY); // FOR TESTING
 	            return ret;
 	        }
 	    }

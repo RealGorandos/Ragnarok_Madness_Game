@@ -99,6 +99,7 @@ public class GameEngine implements Runnable {
 		delta = 0; 
 		
 		int fps = 0;
+		int ups = 0;
 		while(running) {
 			long currTime = System.nanoTime();
 			delta += (currTime - prevTime) / nanoSec; // Converting it to sec after getting the time diff
@@ -107,16 +108,19 @@ public class GameEngine implements Runnable {
 			while(delta >= 1) {
 				//FOR TESTING!!
 				this.update();
-				this.render();
-				fps++;
+				ups++;
+				
 				delta--;
 			}
 			
+			fps++;
+			this.render();
 			//Show the result after completing 1 sec to measure the fps
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer+= 1000; //To keep tracking with real time process shifting (It is not accurate 100%)
-				//System.out.println(fps + " updates");
+				System.out.println(ups + " updates, " + fps + " frames" );
 				fps = 0;
+				ups = 0;
 			}
 		 }
 	}
