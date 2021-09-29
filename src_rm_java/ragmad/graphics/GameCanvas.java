@@ -53,13 +53,6 @@ public class GameCanvas extends Canvas {
 		}
 		
 		/*Copying the GameEngine pixels to the image pixels (Acting as a buffer)*/
-		int[] ge_pixels = GameEngine.GetPixels();
-		
-		
-		for(int i = 0; i  < ge_pixels.length ; i++) {
-			this.pixels[i] = ge_pixels[i]; // assigning a new value to it
-		}
-			
 		
 		/*	Drawing the Image to the canvas	*/
 		Graphics g = bfr.getDrawGraphics();
@@ -71,4 +64,10 @@ public class GameCanvas extends Canvas {
 	
 	public void update() {
 	}
+	
+	
+	public int[] getPixels() {return this.pixels;}
+	
+	
+	
 }

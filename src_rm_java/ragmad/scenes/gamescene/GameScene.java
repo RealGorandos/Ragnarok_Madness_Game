@@ -12,7 +12,7 @@ public class GameScene implements Scene{
 	
 	
 	int xOffset, yOffset;
-	public final static int SCALING = 1;  // Change it if you want to see different scalings. 
+	public final static int SCALING = 2;  // Change it if you want to see different scalings. 
 	int xCord;
 	int yCord;
 	int frameMovement;
@@ -44,7 +44,12 @@ public class GameScene implements Scene{
 	}
 	
 	
-	///___________________________ GameEngine component methods area ______________
+	
+	///___________________________ GameEngine component methods area _________________________________
+	
+	
+	
+	
 	/**
 	 * Defines Game physics and scene logic
 	 */
@@ -63,6 +68,8 @@ public class GameScene implements Scene{
 	}
 
 	
+	
+	
 	/**
 	 * Takes care of rendering ot the GameEngine class
 	 * 
@@ -73,14 +80,48 @@ public class GameScene implements Scene{
 	public void render() {
 		for(int x = this.map.getWidth() - 1; x >= 0 ; x--) {
 			for(int y = 0 ; y < this.map.getHeight(); y++) {
-				if(this.map.getMap()[x+y*map.getWidth()] == 0xff5d3030)
-					Tile.DESERT2.renderToRaster(x, y, xOffset, yOffset, SCALING);
-				else 
+				
+				/*THIS WHOLE MESS SHOULD BE CLEANED!!!*/
+				switch(this.map.getMap()[x+y*map.getWidth()] ) {
+				case 0xff0032ff:
+					if(anchorExists(x,y,Tile.PORTAL1, 0xff0032ff)) Tile.PORTAL1.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				case 0xff5d3030:
+					//GameEngine.FULL_WALL.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				case 0xff612929: // First left
+					//Tile.WALL1.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				case 0xff7f7f7f:
+					//Tile.WALL2.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				case 0xff414040:
+					//Tile.WALL3.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				case 0xff000000:
+					//Tile.WALL4.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				default:
 					Tile.DESERT1.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					break;
+				}
+					
 			}
 		}
 	}
 	
+	
+	
+	/**
+	 * This is a simple rendering algorithm that I created. We render big sprites from top down, but before we start rendering, we check if the base of the tile (meant to be rendered) exists.
+	 * I call the base "Anchor" (Just trying to be cool :) )!
+	 * @param x, y - Coordinates of the tile head on the map
+	 * @param t - The tile that is meant to be rendered.
+	 * @param id - The colour id of the tile (Base colour should be equal to head colour => Tile base and head exists => We can start rendering :))) )
+	 * */
+	private boolean anchorExists(int x, int y, Tile t, int id) {
+		 return this.map.getMap()[ ( x - (t.getIsoWidth() - 1)) + (y + (t.getIsoHeight() - 1)) *map.getWidth()] == id;
+	}
 }
 
 

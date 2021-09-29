@@ -11,53 +11,37 @@ import ragmad.graphics.sprite.*;
  *
  */
 public class Tile {
-	private int /* xCord, yCord, */ zCord; // xCord,yCord are in coordinates while zCord are pixels bias
+	
+	
+	private int zCord; // xCord,yCord are in coordinates while zCord are pixels bias
 	private int isoWidth, isoHeight; // How many tiles do this tile occupy! (Since we can't have an arc shap '>' for example we can say that xTiles and yTiles are the width,height in the isometric space)
 	private boolean solid;
-	private Sprite[] sprite;
-
+	private Sprite sprite;
+	
+	
+	
+	/*These are the normalized base tile height and width. Change it if you want to have anotehr system in your rendering process.*/
+	private final int TILE_WIDTH = 64;
+	private final int TILE_HEIGHT = 32;
+	
+	
+	/*For testing Tiles.*/
 	public static Tile DESERT1 = new Tile(0, Sprite.DESERT_TILE_1, false);
 	public static Tile DESERT2 = new Tile(20, Sprite.DESERT_TILE_2, false);
+	public static Tile PORTAL1 = new Tile(0, Sprite.PORTAL_TILE_1, true);
+	
 	
 	
 	// _________________________________ Constructors area _____________________________________________
-	public Tile(/* int xCord, int yCord, */ int zHeight, Sprite sprite, boolean solid){
-		/*
-		 * this.xCord = xCord; this.yCord = yCord;
-		 */
+	public Tile( int zHeight, Sprite sprite, boolean solid){
 		this.zCord = zHeight;
 		this.solid = solid;
-		this.sprite = new Sprite[1];
-		this.sprite[0] = sprite;
-		this.isoWidth = 1;
-		this.isoHeight = 1;
-	}
-	
-	
-	
-	
-	/**
-	 * 
-	 * @param xCord - They are not applicable since this is just an some kind of an encapsulate over the sprite and its physical properties. 
-	 * 							The object positions should be define through an ID map
-	 * @param yCord - You already know :) 
-	 * @param zHeight - The height in pixels of which the Tile is positioned
-	 * @param sprite - array of sprites that this tile can handle. Please: Center bottom tile should be first tile! And it is the tile where we start rendering at. (bottom then up)
-	 * @param isoWidth - Number of tiles that this tile occupy in the x-direction (Isometric space)
-	 * @param isoHeight - Number of tiles that this tile occupy in the y-direction (Isometric space)
-	 */
-	public Tile(/* int xCord, int yCord, */ int zHeight, Sprite[] sprite, boolean solid, int isoWidth, int isoHeight){
-		/*
-		 * this.xCord = xCord; this.yCord = yCord;
-		 */
-		this.isoHeight = isoHeight;
-		this.isoWidth = isoWidth;
-		this.solid = solid;
-		this.zCord = zHeight;
 		this.sprite = sprite;
+		this.isoWidth = sprite.getWidth() / TILE_WIDTH; 		// normal sprite width is 32
+		this.isoHeight = sprite.getHeight() / TILE_HEIGHT; 		// Normal sprite height	
 	}
-	
 
+	
 	
 	
 	
@@ -70,14 +54,12 @@ public class Tile {
 	 * @param yOffset - y pixels offset of the screen.
 	 */
 	public void renderToRaster(int xCord, int yCord, int xOffset, int yOffset, int scaling) {
-		
-		/*Block type or normal tile*/
 		if(this.zCord > 0)
-			renderBlock( sprite[0], xCord, yCord, xOffset, yOffset, scaling);
+			renderBlock( sprite, xCord  , yCord, xOffset, yOffset, scaling);
 		else 
-			renderTile( sprite[0], xCord, yCord, xOffset, yOffset, scaling);
+			renderTile( sprite, xCord, yCord, xOffset, yOffset, scaling);
 	}
-	
+		
 	
 	
 	
@@ -104,15 +86,25 @@ public class Tile {
 		
 		int s_height = sprite.getHeight()*SCALING;
 		int s_width = sprite.getWidth()*SCALING;
-		int s_height_half = s_height >> 1;
-		int s_width_half = s_width >> 1;
 
+		int normal_height = TILE_HEIGHT*SCALING;
+		int normal_width = TILE_WIDTH*SCALING;
+		int n_width_half = normal_width >> 1;
+		int n_height_half = normal_height >> 1;
+		
+		
+		int xPixel = yCord * n_width_half + xCord * n_width_half + xOffset - (this.isoWidth-1)*n_width_half;
+		int yPixel = yCord * n_height_half - xCord * n_height_half + yOffset;
+		
+		
+		//System.out.println(xPixel + ", " + yPixel);
 		for(int y = 0 ; y < s_height; y++) {
-			int yy = y - xCord * s_height_half + yCord * s_height_half + yOffset;   //Mapping coordinates space to the GameEngine pixel Space (Raster space) //yOffset for vertical movement
+			int yy = y + yPixel;   //Mapping coordinates space to the GameEngine pixel Space (Raster space) //yOffset for vertical movement
 			if( yy >= GameEngine.GetHeight()) break;
+			if(yy < -s_height) break;
 			if(yy < 0) continue;
 			for(int x = 0 ; x < s_width; x++) {
-				int xx = x + xCord*s_width_half + yCord*s_width_half + xOffset; // mapping // xOffset for horizontal movement 
+				int xx = x + xPixel;
 				int col = tilePixels[x/SCALING + (y/SCALING) * sprite.getWidth()]; // getting the pixel colour of the tile
 				
 				if ( xx >= GameEngine.GetWidth() ) // break if the renderer pointer has exited screen right side
@@ -127,7 +119,7 @@ public class Tile {
 	
 	
 	
-	
+	 
 	
 	/**
 	 * Interpolates a block shape by taking the edge color of the tile and shade it a bit and render it to the base
@@ -136,6 +128,8 @@ public class Tile {
 	 * @param xCord - xCoordinate on the isometric space. Check the renderTile() description to understand the space.
 	 * @param yCord - yCoordinate on the isometric space. Check the renderTile() description to understand the space.
 	 * @param zPixels - The offset height of the tile. This function will render the edges of the given tile as well.
+	 * 
+	 * A fragile piece of code that barely works :) 
 	 */
 	private void renderBlock (Sprite sprite, int xCord, int yCord, int xOffset, int yOffset, int SCALING) {
 		int zPixels = zCord * SCALING; // should also response with the scaling factor
@@ -147,11 +141,24 @@ public class Tile {
 		int s_width = sprite.getWidth()*SCALING;
 		int s_height_half = s_height >> 1; // half sprite scaled height
 		int s_width_half = s_width >> 1; // half sprite scaled width
+	
+		int normal_height = TILE_HEIGHT*SCALING;
+		int normal_width = TILE_WIDTH*SCALING;
+		int n_width_half = normal_width >> 1;
+		int n_height_half = normal_height >> 1;
 		
+		
+		/*For the sake of simplicity. Draw a cartesian graph and map the point (1,1) to its coordinate.*/
+		/*- (this.isoWidth-1)*n_width_half ::: This helps in adding offsets for different kind of tile sizes*/
+		int xPixel = yCord * n_width_half + xCord * n_width_half + xOffset - (this.isoWidth-1)*n_width_half;
+		int yPixel = yCord * n_height_half - xCord * n_height_half + yOffset;
+		
+			
 		for(int y = 0 ;y < s_height; y++) {
-			int yy = y - xCord * s_height_half + yCord * s_height_half + yOffset;
-			if(yy < 0)
-				continue; // speeding things up a bit.
+			int yy = y + yPixel;
+			
+			if(yy <= -s_height) break;
+			if(yy < 0) continue; // speeding things up a bit.
 			
 			yy = yy - zPixels;
 			
@@ -161,7 +168,7 @@ public class Tile {
 			
 			for(int x = 0 ; x < s_width; x++) {
 				int col = tilePixels[ x/SCALING + (y/SCALING) * sprite.getWidth() ];
-				int xx = x + xCord * s_width_half + yCord * s_width_half + xOffset;
+				int xx = x + xPixel;
 				
 				/*width boundaries checking*/
 				if ( xx >= GameEngine.GetWidth() ) // break if the renderer pointer has exited screen right side

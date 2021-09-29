@@ -109,7 +109,7 @@ public class Map {
 	    tilesInColumn.add(startTileY);
 	    int s = (xShift)? 1 : 0;
 	    tilesInColumn.add(s);
-	    //System.out.println(s + " Was added to the column");
+	    
 	    
 	    if (xShift) {
 	      startTileX--;
@@ -156,13 +156,13 @@ public class Map {
 	        if ((mouseY - firstTileYShiftAtScreenAt0Height) > ((mouseX - firstTileXShiftAtScreen)*a + b)) {
 	        	int[] ret = new int[2];
 	        	ret[0] = tileInfoX;
-	        	ret[1] = tileInfoY;
-	        	//System.out.println("Current hovered tile is: " + tileInfoX + ", " + tileInfoY); // FOR TESTING
+	        	ret[1] = tileInfoY;	        	
 	            return ret;
 	        }
 	    }
 	    return null;
 	}
+	
 	
 	
 

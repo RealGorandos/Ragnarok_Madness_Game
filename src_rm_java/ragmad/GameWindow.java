@@ -63,5 +63,9 @@ public class GameWindow extends JFrame{
 		gc.render();
 	}
 	
+	
+	public int[] getPixels() {return this.gc.getPixels();}
+	
+	
 	 
 }

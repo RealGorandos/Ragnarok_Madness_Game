@@ -16,7 +16,9 @@ import javax.imageio.ImageIO;
  */
 public enum SpriteSheet {
 
-	DESERT_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\desert_res.png");
+	DESERT_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\desert_res_old.png"),
+	PORTAL_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\porotals.png");
+	
 	
 	
 	BufferedImage image;
@@ -55,13 +57,49 @@ public enum SpriteSheet {
 	 * @param height - The height of the sprite you want to crop
 	 * @param pixels - a reference array of pixels in which the croppepd values will be fed into. 
 	 */
-	public void crop(int xCoordinates, int yCoordinates , int width, int height , int[] pixels) {
-		System.out.println(xCoordinates + ", " + yCoordinates);
+	public void crop(int xOffset, int yOffset , int width, int height , int[] pixels) {
 		for(int y = 0; y < height ; y++) {
-			int ny = y + yCoordinates;
+			int ny = y + yOffset;
 			for(int x = 0 ; x < width ; x++) {
-				int nx = x + xCoordinates;
+				int nx = x + xOffset;
+				
+				if(ny < 0 || nx < 0 ) pixels[x + y * width] = 0x00000000; // Transparent background
+				
 				pixels[x + y * width] = this.pixels[nx + ny * this.width];
+			}
+		}
+	}
+	
+	
+
+	/**
+	 * Crops a specific sprite from the object's Sprite-Sheet.
+	 * @param xCoordinates - x-axis: row of the sprite you want to crop from the photo
+	 * @param yCoordinates - y-axis: column of the sprite you want to crop from the spritesheet
+	 * @param width - The width of the sprite you want to crop
+	 * @param height - The height of the sprite you want to crop
+	 * @param pixels - a reference array of pixels in which the croppepd values will be fed into. 
+	 */
+	public void crop(int xOffset, int yOffset , int width, int height , int[] pixels, int xPeak) {
+		for(int y = 0; y < height ; y++) {
+			int ny = y + yOffset;
+			
+			for(int x = 0 ; x < width ; x++) {
+				int nx = x + xOffset;
+				
+				if(ny < 0 || ny >= height) {
+					pixels[x + y * width] = 0x00000000; // Transparent background
+					continue;
+				}
+				 
+				/*Xpeak is positive, we draw margin on right side*/
+				if(xPeak > 0 && x > width - xPeak )
+					pixels[x + y * width] = 0x00000000; // Transparent background
+				/*Xpeak is negative, we draw margin on left side*/
+				else if ((xPeak < 0 && x < -xPeak) || nx < 0 || nx >= this.width)
+					pixels[x + y * width] = 0x00000000; // Transparent background
+				else
+					pixels[x + y * width] = this.pixels[nx + ny * this.width];
 			}
 		}
 	}
