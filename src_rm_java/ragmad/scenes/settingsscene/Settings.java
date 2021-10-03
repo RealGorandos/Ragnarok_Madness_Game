@@ -55,7 +55,7 @@ public class Settings implements Scene {
         }
 
         initOptions();
-        GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
+        //GameEngine.GetSoundEngine().updateAudio( Paths.get("").toAbsolutePath().getParent().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
 
     }
 

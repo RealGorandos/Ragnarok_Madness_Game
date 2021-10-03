@@ -75,7 +75,7 @@ public class Sound extends Thread {
 				clip.loop(clip.LOOP_CONTINUOUSLY);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("File not found: " + path);
 			e.printStackTrace();
 		}
 	}

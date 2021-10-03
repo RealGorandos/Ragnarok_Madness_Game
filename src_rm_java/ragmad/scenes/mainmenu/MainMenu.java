@@ -59,7 +59,7 @@ public class MainMenu implements Scene {
 		}
 
 		initOptions();
-		GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
+		GameEngine.GetSoundEngine().updateAudio( Paths.get("").toAbsolutePath().getParent().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
 		
 	}
 	
@@ -130,13 +130,13 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			GameEngine.GetSoundEngine().updateAudio( Paths.get("").toAbsolutePath().getParent().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
 			GameEngine.ChangeScene("GameScene");
 			
 			break;
 		case 1:
 			//Change into Settings
-			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			//GameEngine.GetSoundEngine().updateAudio( Paths.get("").toAbsolutePath().getParent().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
 			GameEngine.ChangeScene("SettingsMenu");
 			break;
 		case 2: 

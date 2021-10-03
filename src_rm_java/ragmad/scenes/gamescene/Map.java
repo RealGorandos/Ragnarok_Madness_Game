@@ -58,8 +58,8 @@ public class Map {
 	*/
 	public int[] getTileAt(int mouseX,int mouseY, int xOffset, int yOffset) {
         //	half width, height... MUST BE SUBSTITUTED PROPERLY
-        var tileWidth = Sprite.DESERT_TILE_1.getWidth() >> 1; 
-        var tileHeight = Sprite.DESERT_TILE_1.getHeight() >> 1;
+        var tileWidth = (Sprite.DESERT_TILE_1.getWidth() * GameScene.SCALING) >> 1; 
+        var tileHeight = (Sprite.DESERT_TILE_1.getHeight() * GameScene.SCALING) >> 1;
         
         
         // TOP LEFT CORNER
