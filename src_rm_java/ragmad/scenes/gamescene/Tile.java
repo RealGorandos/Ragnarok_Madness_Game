@@ -30,6 +30,20 @@ public class Tile {
 	public static Tile DESERT2 = new Tile(20, Sprite.DESERT_TILE_2, false);
 	public static Tile PORTAL1 = new Tile(0, Sprite.PORTAL_TILE_1, true);
 	
+	public static Tile PLAYER ;//= new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
+	/*public static Tile PLAYER2 = new Tile(0, Sprite.PLAYER_TILE_BACK_2, false);
+	public static Tile PLAYER3 = new Tile(0, Sprite.PLAYER_TILE_BACK_3, false);
+	public static Tile PLAYER4 = new Tile(0, Sprite.PLAYER_TILE_BACK_4, false);
+	public static Tile PLAYER5 = new Tile(0, Sprite.PLAYER_TILE_BACK_5, false);
+	public static Tile PLAYER6 = new Tile(0, Sprite.PLAYER_TILE_BACK_6, false);*/
+	/*public static Tile PLAYER7 = new Tile(0, Sprite.PLAYER_TILE_BACK_7, false);
+	public static Tile PLAYER8 = new Tile(0, Sprite.PLAYER_TILE_BACK_8, false);
+	public static Tile PLAYER9 = new Tile(0, Sprite.PLAYER_TILE_BACK_9, false);
+	public static Tile PLAYER10 = new Tile(0, Sprite.PLAYER_TILE_BACK_10, false);*/
+	//public static Tile PLAYER8 = new Tile(0, Sprite.PLAYER_TILE_BACK_4, false);
+
+
+	
 	
 	
 	// _________________________________ Constructors area _____________________________________________
@@ -59,7 +73,6 @@ public class Tile {
 		else 
 			renderTile( sprite, xCord, yCord, xOffset, yOffset, scaling);
 	}
-		
 	
 	
 	
@@ -109,7 +122,7 @@ public class Tile {
 				
 				if ( xx >= GameEngine.GetWidth() ) // break if the renderer pointer has exited screen right side
 					break;
-				if( xx < 0 || (col & 0xff000000) == 0 )  //don't do anything if the xx is out of bounds or pixel is transparent 
+				if( xx < 0 || (col & 0xff000000) == 0  )  //don't do anything if the xx is out of bounds or pixel is transparent 
 					continue;
 				
 				outputPixels[xx + yy * GameEngine.GetWidth()] = col;
@@ -117,6 +130,8 @@ public class Tile {
 		}
 	}
 	
+	
+	/*-----------------------------------------------------------------------------------------------------------------------------------------*/
 	
 	
 	 

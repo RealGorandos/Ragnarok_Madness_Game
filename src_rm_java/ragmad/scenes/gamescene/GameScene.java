@@ -1,6 +1,7 @@
 package ragmad.scenes.gamescene;
 
 import ragmad.GameEngine;
+import ragmad.entity.characters.Player;
 import ragmad.graphics.sprite.Sprite;
 import ragmad.io.Keyboard;
 import ragmad.io.Mouse;
@@ -10,15 +11,16 @@ import java.lang.Math;
 
 public class GameScene implements Scene{
 	
-	
-	int xOffset, yOffset;
+
+	public static int xOffset, yOffset;
 	public final static int SCALING = 2;  // Change it if you want to see different scalings. 
 	int xCord;
 	int yCord;
 	int frameMovement;
 	int m_width, m_height;
 	private Map map;
-	
+	private Player player; ///--------------------------------><><><><<><><>
+	//private Keyboard input;
 	
 	/// _________________________ Constructor Area_________________________________
 	
@@ -27,9 +29,10 @@ public class GameScene implements Scene{
 		this.m_width = width;
 		xCord = 0;
 		yCord = 0;
-		xOffset = 0;	//The camera shifting ratio at x
-		yOffset = 0;	//The camera shifting ratio at y
+		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
+		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
 		this.map = new Map();
+		player = new Player();
 	}
 	
 	
@@ -38,9 +41,10 @@ public class GameScene implements Scene{
 		this.m_width = width;
 		xCord = 0;
 		yCord = 0;
-		xOffset = 0;	//The camera shifting ratio at x
-		yOffset = 0;	//The camera shifting ratio at y
+		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
+		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
 		this.map = new Map(mapPath); //Our map loaded from a file
+		player = new Player();
 	}
 	
 	
@@ -56,11 +60,14 @@ public class GameScene implements Scene{
 	@Override
 	public void update() {
 		frameMovement = 5;// (int)(5.0 *  (GameEngine.GetDelta())); /// <--- BUG: Delta Time is not set properly.
+		player.update(frameMovement, this.map);
+
 		
-		if(Keyboard.isUp()) {yOffset += frameMovement;}
-		if(Keyboard.isDown()) {yOffset -= frameMovement;}
-		if(Keyboard.isRight()) {xOffset-= frameMovement;}
-		if(Keyboard.isLeft()) {xOffset += frameMovement;}
+		if(Keyboard.isUp()) yOffset+=frameMovement;
+		if(Keyboard.isDown()) yOffset-=frameMovement;
+		if(Keyboard.isRight()) xOffset-=frameMovement;
+		if(Keyboard.isLeft()) xOffset+=frameMovement;
+		
 		
 		int[] testing = this.map.getTileAt(Mouse.x,Mouse.y,xOffset, yOffset);
 		if(testing == null) return;
@@ -108,6 +115,9 @@ public class GameScene implements Scene{
 					
 			}
 		}
+		player.render(1);
+		//System.out.println("THe render is render");
+		//Tile.PLAYER2.renderPlayer(0,0, xOffset, yOffset, SCALING);
 	}
 	
 	
