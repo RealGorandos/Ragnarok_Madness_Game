@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 public class Choice {
 
-	public final String name;
+	public  String name;
 	public final Rectangle frame;
 	public final int x,y;
 	public boolean hovered;

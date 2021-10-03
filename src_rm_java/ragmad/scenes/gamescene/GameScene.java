@@ -68,7 +68,11 @@ public class GameScene implements Scene{
 		if(Keyboard.isRight()) xOffset-=frameMovement;
 		if(Keyboard.isLeft()) xOffset+=frameMovement;
 		
-		
+
+		if (Keyboard.esc()) {
+			GameEngine.ChangeScene("Menu");
+		}
+
 		int[] testing = this.map.getTileAt(Mouse.x,Mouse.y,xOffset, yOffset);
 		if(testing == null) return;
 		
@@ -136,3 +140,4 @@ public class GameScene implements Scene{
 
 
 
+//keyboard shortkey

@@ -16,9 +16,12 @@ import javax.imageio.ImageIO;
  */
 public enum SpriteSheet {
 
-	DESERT_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\desert_res_orig.png"),
-	PORTAL_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\porotals.png"),
-	PLAYER_SHEET(Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\jaden_yuki_2.png");
+
+	DESERT_SHEET(Paths.get("").toAbsolutePath().toString() + "//res//desert_res_orig.png"),
+	PORTAL_SHEET(Paths.get("").toAbsolutePath().toString() + "//res//porotals.png"),
+	PLAYER_SHEET(Paths.get("").toAbsolutePath().toString() + "//res//jaden_yuki_2.png");
+
+
 	
 	
 	

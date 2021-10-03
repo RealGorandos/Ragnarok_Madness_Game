@@ -8,16 +8,17 @@ import ragmad.scenes.Scene;
 import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.gamescene.Tile;
 import ragmad.scenes.mainmenu.MainMenu;
+import ragmad.scenes.settingsscene.Settings;
 import ragmad.sound_engine.Sound;
 
 public class GameEngine implements Runnable {
-	
+
 	private GameWindow window;
 	
 	private static Scene currentScene; 
 	
 	private static int[] pixels; 	// Every class should use this pixels to render!!
-	
+	static MainMenu menu;
 	private static Sound soundEngine;
 	
 	private Thread thread;
@@ -44,8 +45,9 @@ public class GameEngine implements Runnable {
 		this.m_height = m_height;
 		soundEngine = new Sound();
 		this.m_width = m_width;
-		String background_path = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\main_menu_temp.jpg";	// TESTING
-		currentScene = new MainMenu(m_width, m_height, background_path);	// TESTING
+		String background_path = Paths.get("").toAbsolutePath().toString() + "/res/main_menu_temp.jpg";	// TESTING
+		menu = new MainMenu(m_width, m_height, background_path);	// TESTING
+		currentScene = menu;
 		//delta = 
 	}
 	
@@ -56,12 +58,12 @@ public class GameEngine implements Runnable {
 	 * An update function that updates the game componenets per frame
 	 */
 	private void update() {
-		if (Keyboard.esc()) 			
-			this.paused = !this.paused;
-		if (this.paused && !(currentScene instanceof MainMenu)) { 
-			System.out.println("game paused");
-			return;
-		}
+//		if (Keyboard.esc())
+//			this.paused = !this.paused;
+//		if (this.paused && !(currentScene instanceof MainMenu)) {
+//			System.out.println("game paused");
+//			return;
+//		}
 		this.currentScene.update();
 		this.window.update();
 	}
@@ -142,9 +144,18 @@ public class GameEngine implements Runnable {
 	
 	
 	/*Map should be changed Dynamically later*/
-	public static synchronized void ChangeScene() {
-		String mapPath = Paths.get("").toAbsolutePath().getParent().toString() + "\\res\\map4.png";
-		currentScene = new GameScene(m_width, m_height,mapPath);
+	public static synchronized void ChangeScene(String scene) {
+		if(scene.equals("GameScene")){
+			String mapPath = Paths.get("").toAbsolutePath().toString() + "/res/map4.png";
+			currentScene = new GameScene(m_width, m_height,mapPath);
+		}
+		else if(scene.equals("Menu")) {
+			currentScene = menu;
+		}
+		else{
+			String SettingsMenuPath = Paths.get("").toAbsolutePath().toString() + "/res/settings_menu.jpeg";
+			currentScene = new Settings(m_width, m_height,SettingsMenuPath);
+		}
 		
 	}
 	
@@ -161,3 +172,4 @@ public class GameEngine implements Runnable {
 	public static Sound GetSoundEngine() {return soundEngine;}
 	
 }
+//remove getParent()
