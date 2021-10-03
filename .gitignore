@@ -1,4 +1,11 @@
 # Compiled class file
+.DS_Store
+.idea/
+.idea/Ragnarok_Madness_Game.iml
+src_rm_java/.DS_Store
+src_rm_java/ragmad/.DS_Store
+src_rm_java/ragmad/sound_engine/.DS_Store
+src_rm_java/ragmad/out/
 .metadata
 bin/
 tmp/

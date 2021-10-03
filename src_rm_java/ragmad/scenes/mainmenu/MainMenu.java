@@ -11,6 +11,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -52,12 +53,13 @@ public class MainMenu implements Scene {
 			 img = ImageIO.read(new File(url));
 			 backgroundImage.getGraphics().drawImage( img, 0, 0 , m_width, m_height, null); // Storing the background image in the buffer.
 		}catch(Exception e) {
-			System.out.println("File does not exist");
+			System.out.println("File does not exist" + url);
+
 			return;
 		}
 
 		initOptions();
-		GameEngine.GetSoundEngine().updateAudio(".//ragmad//sound_engine//themes//got.wav", 1000,true);
+		GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
 		
 	}
 	
@@ -66,13 +68,12 @@ public class MainMenu implements Scene {
 	 * Initializing the game main menu's options. 
 	 */
 	private void initOptions() {
-		
 		String[] opts = new String[3];
 		opts[0] = "Start";
 		opts[1] = "Settings";
 		opts[2] = "Exit";
-		
-		
+
+
 		options = new Choice[3]; 
 		
 		Graphics g = background.getGraphics();
@@ -80,6 +81,7 @@ public class MainMenu implements Scene {
 		FontMetrics fm = g.getFontMetrics();	// Getting the Fonts settings 
 		
 		for(int i = 0 ; i < opts.length ; i++) {
+
 			int str_wid = fm.stringWidth(opts[i]); // The default string width
 			int str_hgt = fm.getHeight() + 10; 			// The default string height + margin
 			int x =  m_width/2 - str_wid/2;			// x-Starting drawing point coord
@@ -128,11 +130,14 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			GameEngine.GetSoundEngine().updateAudio(".//ragmad//sound_engine//themes//button_sound.wav", 0, false);
-			GameEngine.ChangeScene();
+			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			GameEngine.ChangeScene("GameScene");
 			
 			break;
-		case 1: 
+		case 1:
+			//Change into Settings
+			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			GameEngine.ChangeScene("SettingsMenu");
 			break;
 		case 2: 
 			
@@ -185,6 +190,7 @@ public class MainMenu implements Scene {
 	 * For the simplicity of usage. Graphics() object rendering is used to render the buttons to the canvas.
 	 */
 	private void renderButtons() {
+
 		Graphics g = background.getGraphics();
 		//g.setFont(new Font("Dialog", Font.BOLD, 20));
 		g.setFont(new Font("Arial Black", Font.BOLD, 20));
