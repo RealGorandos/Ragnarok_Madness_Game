@@ -176,8 +176,10 @@ public class Settings implements Scene {
             case 0:
                 if (options2[0].name.equals("OFF")){
                     options2[0].name="ON";
+                    GameEngine.GetSoundEngine().pauseSound();
                 }else{
                     options2[0].name="OFF";
+                    GameEngine.GetSoundEngine().resumeSound();
                 }
 
 

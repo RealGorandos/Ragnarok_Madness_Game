@@ -19,7 +19,7 @@ public class Sound extends Thread {
 	
 	Clip clip;
 	
-	
+	long clipTimePosition;
 	boolean update;
 	String currentPath;
 	long delay;
@@ -96,7 +96,14 @@ public class Sound extends Thread {
         }
 	}
 	
-
+	public void pauseSound() {
+		clipTimePosition = clip.getMicrosecondPosition();
+		clip.stop();
+	}
 	
+	public void resumeSound(){
+		clip.setMicrosecondPosition(clipTimePosition);
+		clip.start();
+	}
 	
 }
