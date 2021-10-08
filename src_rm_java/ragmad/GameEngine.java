@@ -46,7 +46,7 @@ public class GameEngine implements Runnable {
 		this.m_height = m_height;
 		soundEngine = new Sound();
 		this.m_width = m_width;
-		String background_path = Paths.get("").toAbsolutePath().toString() + "/res/main_menu_temp.jpg";	// TESTING
+		String background_path =  Paths.get("").toAbsolutePath().toString() + "/res/main_menu_temp.jpg";	// TESTING
 		menu = new MainMenu(m_width, m_height, background_path);	// TESTING
 		currentScene = menu;
 		String SettingsMenuPath = Paths.get("").toAbsolutePath().toString() + "/res/settings_menu.jpeg";
@@ -156,7 +156,9 @@ public class GameEngine implements Runnable {
 			currentScene = menu;
 		}
 		else{
+
 			currentScene = settings;
+
 		}
 		
 	}

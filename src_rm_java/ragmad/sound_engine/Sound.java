@@ -20,7 +20,7 @@ public class Sound extends Thread {
 
 	Clip clip;
 	
-	
+	long clipTimePosition;
 	boolean update;
 	String currentPath;
 	long delay;
@@ -75,7 +75,7 @@ public class Sound extends Thread {
 				clip.loop(clip.LOOP_CONTINUOUSLY);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("File not found: " + path);
 			e.printStackTrace();
 		}
 	}
@@ -96,7 +96,14 @@ public class Sound extends Thread {
         }
 	}
 	
-
+	public void pauseSound() {
+		clipTimePosition = clip.getMicrosecondPosition();
+		clip.stop();
+	}
 	
+	public void resumeSound(){
+		clip.setMicrosecondPosition(clipTimePosition);
+		clip.start();
+	}
 	
 }

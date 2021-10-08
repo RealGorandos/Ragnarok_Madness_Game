@@ -44,10 +44,11 @@ public class GameScene implements Scene{
 		yCord = 0;
 		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
 		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
-		this.map = new Map(mapPath,hashmap); //Our map loaded from a file
-		 hashmap=new HashMap<Integer, Tile>();
-		 this.hashmap.put( 0xff0032ff,Tile.PORTAL1);
+		hashmap=new HashMap<Integer, Tile>();
+		this.hashmap.put( 0xff0032ff,Tile.PORTAL1);
 		this.hashmap.put( 0xff8e4a4a,Tile.DESERT1);
+		this.map = new Map(mapPath,hashmap); //Our map loaded from a file
+
 		player = new Player();
 	}
 	

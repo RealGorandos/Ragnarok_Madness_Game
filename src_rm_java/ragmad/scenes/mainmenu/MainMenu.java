@@ -59,7 +59,9 @@ public class MainMenu implements Scene {
 		}
 
 		initOptions();
+
 		GameEngine.GetSoundEngine().updateAudio(MusicClips.MAINMENU.toString(),1000,true);
+
 	}
 	
 	
@@ -129,13 +131,17 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
+
 			GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
+
 			GameEngine.ChangeScene("GameScene");
 			
 			break;
 		case 1:
 			//Change into Settings
+
 			GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
+
 			GameEngine.ChangeScene("SettingsMenu");
 			break;
 		case 2: 
