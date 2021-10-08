@@ -12,7 +12,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
-import java.nio.file.Paths;
 
 public class Settings implements Scene {
 
