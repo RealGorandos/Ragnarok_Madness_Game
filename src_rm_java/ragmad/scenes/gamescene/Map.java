@@ -3,6 +3,7 @@ package ragmad.scenes.gamescene;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -19,16 +20,17 @@ public class Map {
 	private int[] map;
 	private int width,height;
 	private String path;
-	
-	
-	public Map(String path) {
+	HashMap<Integer, Tile> hashmap;
+	//Hashmap that assign colors to tiles?
+	//map is given in the constructor
+	public Map(String path,HashMap hm) {
 		this.path = path;
 		try {
 			BufferedImage mapImage = ImageIO.read(new File(path)); 	// Loading an image to the memory
 			this.width = mapImage.getWidth();
 			this.height = mapImage.getHeight();
+			this.hashmap=hm;
 			map = new int [this.width*this.height];
-			
 			mapImage.getRGB(0, 0, this.width, this.height, map, 0, this.width); 	//Copies the loaded image pixels to our pixels-grid
 			
 		} catch (Exception e) {
@@ -36,7 +38,11 @@ public class Map {
 			e.printStackTrace();
 		}
 	}
-	
+
+	//method which receives an int i.e color, return tile type
+	public Tile getTile(Integer color){
+		return this.hashmap.get(color);
+	}
 	public Map() {
 		this.width = 0;
 		this.height = 0;

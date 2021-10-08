@@ -7,11 +7,12 @@ import ragmad.io.Keyboard;
 import ragmad.io.Mouse;
 import ragmad.scenes.Scene;
 import java.lang.Math;
+import java.util.HashMap;
 
 
 public class GameScene implements Scene{
-	
 
+	HashMap<Integer, Tile> hashmap;
 	public static int xOffset, yOffset;
 	public final static int SCALING = 2;  // Change it if you want to see different scalings. 
 	int xCord;
@@ -43,7 +44,10 @@ public class GameScene implements Scene{
 		yCord = 0;
 		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
 		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
-		this.map = new Map(mapPath); //Our map loaded from a file
+		this.map = new Map(mapPath,hashmap); //Our map loaded from a file
+		 hashmap=new HashMap<Integer, Tile>();
+		 this.hashmap.put( 0xff0032ff,Tile.PORTAL1);
+		this.hashmap.put( 0xff8e4a4a,Tile.DESERT1);
 		player = new Player();
 	}
 	
@@ -91,7 +95,6 @@ public class GameScene implements Scene{
 	public void render() {
 		for(int x = this.map.getWidth() - 1; x >= 0 ; x--) {
 			for(int y = 0 ; y < this.map.getHeight(); y++) {
-				
 				/*THIS WHOLE MESS SHOULD BE CLEANED!!!*/
 				switch(this.map.getMap()[x+y*map.getWidth()] ) {
 				case 0xff0032ff:

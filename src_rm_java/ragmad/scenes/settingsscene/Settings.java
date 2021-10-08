@@ -55,7 +55,6 @@ public class Settings implements Scene {
         }
 
         initOptions();
-        GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
 
     }
 
@@ -157,6 +156,9 @@ public class Settings implements Scene {
                 this.options[i].hovered = true;
                 if(Mouse.buttonNum == 1) {
                     buttonClicked(i);
+                    Mouse.buttonNum = -1;
+                    Mouse.x= -1;
+                    Mouse.y = -1;
                 }
             }
             else {
@@ -178,12 +180,18 @@ public class Settings implements Scene {
                     options2[0].name="ON";
                 }else{
                     options2[0].name="OFF";
+                    GameEngine.GetSoundEngine().stopMusic();
                 }
 
 
                 break;
             case 1:
-                //FPS
+                //FPS change fps from 60 to 30
+                if (options2[1].name.equals("60")){
+                    options2[1].name="30";
+                }else{
+                    options2[1].name="60";
+                }
                 break;
             case 2:
 

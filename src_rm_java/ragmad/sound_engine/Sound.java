@@ -2,6 +2,7 @@ package ragmad.sound_engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -16,7 +17,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound extends Thread {
 	
-	
+
 	Clip clip;
 	
 	
@@ -58,8 +59,7 @@ public class Sound extends Thread {
 		this.openAudio(currentPath, delay);
 	}
 	
-	
-	
+
 	
 	
 	

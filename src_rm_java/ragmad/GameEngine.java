@@ -19,11 +19,12 @@ public class GameEngine implements Runnable {
 	
 	private static int[] pixels; 	// Every class should use this pixels to render!!
 	static MainMenu menu;
+	static Settings settings;
 	private static Sound soundEngine;
 	
 	private Thread thread;
 	private boolean running;
-	
+	public static int frames_per_sec=60;
 	private static int m_width;
 
 	private static int m_height;
@@ -48,6 +49,8 @@ public class GameEngine implements Runnable {
 		String background_path = Paths.get("").toAbsolutePath().toString() + "/res/main_menu_temp.jpg";	// TESTING
 		menu = new MainMenu(m_width, m_height, background_path);	// TESTING
 		currentScene = menu;
+		String SettingsMenuPath = Paths.get("").toAbsolutePath().toString() + "/res/settings_menu.jpeg";
+		settings= new Settings(m_width, m_height,SettingsMenuPath);
 		//delta = 
 	}
 	
@@ -153,8 +156,7 @@ public class GameEngine implements Runnable {
 			currentScene = menu;
 		}
 		else{
-			String SettingsMenuPath = Paths.get("").toAbsolutePath().toString() + "/res/settings_menu.jpeg";
-			currentScene = new Settings(m_width, m_height,SettingsMenuPath);
+			currentScene = settings;
 		}
 		
 	}

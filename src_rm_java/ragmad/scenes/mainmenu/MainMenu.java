@@ -59,8 +59,7 @@ public class MainMenu implements Scene {
 		}
 
 		initOptions();
-		GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//got.wav", 1000,true);
-		
+		GameEngine.GetSoundEngine().updateAudio(MusicClips.MAINMENU.toString(),1000,true);
 	}
 	
 	
@@ -106,7 +105,7 @@ public class MainMenu implements Scene {
 	 * */
 	@Override
 	public void update() {
-		
+
 		for(int i = 0 ; i < this.options.length; i++) {
 			if(this.options[i].frame.contains(new Point(Mouse.x,Mouse.y))) {
 				this.options[i].hovered = true;
@@ -130,13 +129,13 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
 			GameEngine.ChangeScene("GameScene");
 			
 			break;
 		case 1:
 			//Change into Settings
-			GameEngine.GetSoundEngine().updateAudio(Paths.get("").toAbsolutePath().toString() +"//src_rm_java//ragmad//sound_engine//themes//button_sound.wav", 0,false);
+			GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
 			GameEngine.ChangeScene("SettingsMenu");
 			break;
 		case 2: 
