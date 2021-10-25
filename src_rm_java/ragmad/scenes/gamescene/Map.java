@@ -21,7 +21,7 @@ public class Map {
 	private int width,height;
 	private String path;
 	HashMap<Integer, Tile> hashmap;
-	//Hashmap that assign colors to tiles?
+
 	//map is given in the constructor
 	public Map(String path,HashMap hm) {
 		this.path = path;

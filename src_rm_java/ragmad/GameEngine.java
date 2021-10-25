@@ -14,8 +14,12 @@ import ragmad.sound_engine.Sound;
 public class GameEngine implements Runnable {
 
 	private GameWindow window;
-	
-	private static Scene currentScene; 
+
+	public static Scene getCurrentScene() {
+		return currentScene;
+	}
+
+	private static Scene currentScene;
 	
 	private static int[] pixels; 	// Every class should use this pixels to render!!
 	static MainMenu menu;
@@ -155,7 +159,7 @@ public class GameEngine implements Runnable {
 		else if(scene.equals("Menu")) {
 			currentScene = menu;
 		}
-		else{
+		else if(scene.equals("Settings")) {
 
 			currentScene = settings;
 

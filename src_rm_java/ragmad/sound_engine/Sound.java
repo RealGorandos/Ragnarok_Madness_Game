@@ -16,14 +16,34 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound extends Thread {
-	
+
+
+	public boolean isClipRunning() {
+		return clipRunning;
+	}
+
+	private boolean clipRunning;
+
+	public Clip getClip() {
+		return clip;
+	}
 
 	Clip clip;
 	
 	long clipTimePosition;
 	boolean update;
+
+	public String getCurrentPath() {
+		return currentPath;
+	}
+
 	String currentPath;
 	long delay;
+
+	public boolean isContinous() {
+		return continous;
+	}
+
 	boolean continous;
 	
 	
@@ -63,14 +83,16 @@ public class Sound extends Thread {
 	
 	
 	
-	private void openAudio(String path, long ms) {
+	public void openAudio(String path, long ms) {
 		try {
+
 			clip = AudioSystem.getClip();
 			Thread.sleep(ms);
 			File audioFile = new File(path);
 			AudioInputStream audioInput = AudioSystem.getAudioInputStream(audioFile);
 			clip.open(audioInput);
 			clip.start();
+			clipRunning = true;
 			if(continous)
 				clip.loop(clip.LOOP_CONTINUOUSLY);
 			
@@ -99,6 +121,8 @@ public class Sound extends Thread {
 	public void pauseSound() {
 		clipTimePosition = clip.getMicrosecondPosition();
 		clip.stop();
+		clipRunning=false;
+
 	}
 	
 	public void resumeSound(){
