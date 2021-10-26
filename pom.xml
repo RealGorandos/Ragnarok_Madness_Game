@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--Maven Setup-->    
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Properties to be used-->
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source> <!-- Using Java 8 (Compatible with our game) -->
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <!-- Our Project Setup -->
+    <groupId>ragnarok</groupId>
+    <artifactId>ragnarok-madness</artifactId>
+    <version>1</version>
+    <packaging>jar</packaging>
+
+    <!-- Specifies data about the final deployment (Where it will be built, final name, etc.)-->
+    <build>
+        <sourceDirectory>src_rm_java/ragmad</sourceDirectory>
+        <defaultGoal>install</defaultGoal>
+        <directory>${basedir}/bin</directory>
+        <finalName>${artifactId}</finalName>
+        <plugins>
+            <!-- Java Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+
+            <plugin>
+            <!-- Java Runtime. Build an executable JAR and finding the Main class -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <archive>
+                <manifest>
+                    <addClasspath>true</addClasspath>
+                    <classpathPrefix>lib/</classpathPrefix>
+                    <mainClass>ragmad.Main</mainClass>
+                </manifest>
+                </archive>
+            </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>
+
+
+    <!-- External imported Libraries -->
+    <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+    </dependencies>
+    
+
+
+</project>
