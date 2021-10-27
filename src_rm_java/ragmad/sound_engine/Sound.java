@@ -127,7 +127,7 @@ public class Sound extends Thread {
 	
 	public void resumeSound(){
 		clip.setMicrosecondPosition(clipTimePosition);
-		clip.start();
+		clip.start(); 
 	}
 	
 }

@@ -14,27 +14,29 @@ import javax.imageio.ImageIO;
  * @author Mohido
  *
  */
-public enum SpriteSheet {
+public class SpriteSheet {
 
-
-	DESERT_SHEET("res/desert_res_orig.png"),
-	PORTAL_SHEET("res/porotals.png"),
-	PLAYER_SHEET("res/jaden_yuki_2.png");
+	
+	/*In Game SpriteSheets*/
+	public final static SpriteSheet DESERT_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/desert_res_orig.png");
+	public final static SpriteSheet PORTAL_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/porotals.png");
+	public final static SpriteSheet PLAYER_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/jaden_yuki_2.png");
 
 
 	
 	
-	
+	String path;
 	BufferedImage image;
 	int width, height; 
-	final int[] pixels;
+	int[] pixels; // Should be final in the future
 	
 	
 	/**
 	 * Initiate a spritesheet. 
 	 * @param path - The path to the sprite-sheet file. The path should contain even the extension.
 	 */
-	private SpriteSheet(String path){
+	public SpriteSheet(String path){
+		
 		int[] tempPixels = null;
 		try {
 			image = ImageIO.read(new File(path));
@@ -43,9 +45,9 @@ public enum SpriteSheet {
 			tempPixels = new int[this.width * this.height];
 			image.getRGB(0, 0, this.width, this.height, tempPixels, 0, this.width);
 			System.out.println("A spritesheet has been loaded!");
+			this.path= path;
 		} catch (IOException e) {
 			System.out.println("Can't find file: " + path);
-			e.printStackTrace();
 		}
 		this.pixels = tempPixels;
 	}
@@ -112,6 +114,26 @@ public enum SpriteSheet {
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
 	public int[] getPixels() {return this.pixels;}
+	
+	public void reload(String newPath) {
+		int[] tempPixels = null;
+		try {
+			image = ImageIO.read(new File(newPath));
+			this.width = image.getWidth();
+			this.height = image.getHeight();
+			tempPixels = new int[this.width * this.height];
+			image.getRGB(0, 0, this.width, this.height, tempPixels, 0, this.width);
+			System.out.println("A spritesheet has been re-loaded!");
+			this.path = newPath;
+		} catch (IOException e) {
+			System.out.println("Can't find file: " + newPath);
+		}
+		this.pixels = tempPixels;
+	}
+	
+	public String toString() {
+		return this.path;
+	}
 	
 	
 }

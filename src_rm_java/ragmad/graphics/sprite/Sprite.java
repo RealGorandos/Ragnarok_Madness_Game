@@ -89,7 +89,7 @@ public enum Sprite {
 	int bgBorderWidth;
 	SpriteSheet sheet;
 	int[] pixels;
-	
+	int xCord, yCord;
 	
 	/*Cunstructor for the player png exclusivily this could be deleted later*/
 	//private Sprite(SpriteSheet sheet , int )
@@ -107,9 +107,11 @@ public enum Sprite {
 		this.sheet = sheet;
 		this.width = width;
 		this.height = height;
+		this.xCord = xCoordinates;
+		this.yCord = yCoordinates;
 		this.bgBorderWidth = 0;
 		this.pixels = new int[this.width * this.height];
-		sheet.crop(xCoordinates * width, yCoordinates * height, width, height, pixels);		
+		sheet.crop(xCord * width, yCord * height, width, height, pixels);		
 	}
 	
 	
@@ -140,4 +142,15 @@ public enum Sprite {
 	public int getWidth () {return this.width;}
 	public int getHeight () {return this.height;}
 	public int getBorderWidth() { return this.bgBorderWidth;}
+	
+	public void refresh() {
+		this.pixels = new int[this.width * this.height];
+		sheet.crop(xCord * width, yCord * height, width, height, pixels);
+	}
 }
+
+
+
+
+
+

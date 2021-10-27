@@ -11,21 +11,46 @@ import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.gamescene.Tile;
 
 public class Player extends Characters {
-	private Sprite sprite;
+	
+	
+	private Sprite curSprite;
 	private int anim = 0;
 	private boolean isWalking = false;
+//	private Sprite[] backSprites;
+//	private Sprite[] forwardSprites;
+//	private Sprite[] leftSprites;
+//	private Sprite[] rightSprites;
+//	private Sprite[] upLeftSprites;
+//	private Sprite[] upRightSprites;
+//	private Sprite[] downRightSprites;
+//	private Sprite[] downLeftSprites;
+	
+	
+	/*
+	 * 
+	 * */
 	public Player() {
 		this.x = -GameEngine.GetWidth()/2;
 		this.y = -GameEngine.GetHeight()/2;
 		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
-		sprite = Sprite.PLAYER_TILE_BACK_1;
+		curSprite = Sprite.PLAYER_TILE_BACK_1;
 	}
 	
+	
+	/*
+	 * 
+	 * */
+	public Player(Sprite s) {
+		this.x = -GameEngine.GetWidth()/2;
+		this.y = -GameEngine.GetHeight()/2;
+		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
+		curSprite = s;
+	}
 	
 	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
-		sprite = Sprite.PLAYER_TILE_BACK_1;
+		curSprite = Sprite.PLAYER_TILE_BACK_1;
 		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
 
 	}
@@ -38,8 +63,6 @@ public class Player extends Characters {
 	 * */
 	
 	public void update(int frameMovement, Map map , HashMap<Integer, Tile> colorsMap ) {
-
-		
 		if(anim < 7500) anim++;
 		else anim = 0;
 		
@@ -51,7 +74,7 @@ public class Player extends Characters {
 		
 		
 		if(xOffset != 0 || yOffset != 0) { 
-			move(xOffset, yOffset, map, colorsMap, sprite);
+			move(xOffset, yOffset, map, colorsMap, curSprite);
 			isWalking = true;
 			}else {
 				isWalking = false;
@@ -60,50 +83,50 @@ public class Player extends Characters {
 	//	int posX=0, posY= 0;
 		if(direction == 0 )
 		{
-			sprite = Sprite.PLAYER_TILE_BACK_1;
+			curSprite = Sprite.PLAYER_TILE_BACK_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_BACK_2;
+					curSprite = Sprite.PLAYER_TILE_BACK_2;
 				}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_BACK_3;
+					curSprite = Sprite.PLAYER_TILE_BACK_3;
 				}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_BACK_4;
+					curSprite = Sprite.PLAYER_TILE_BACK_4;
 				}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_BACK_5;
+					curSprite = Sprite.PLAYER_TILE_BACK_5;
 				}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_BACK_6;
+					curSprite = Sprite.PLAYER_TILE_BACK_6;
 				}
 				if(anim % 70 >= 60 && anim % 70 < 70){
-					sprite = Sprite.PLAYER_TILE_BACK_7;
+					curSprite = Sprite.PLAYER_TILE_BACK_7;
 				}
 			}
 		}
 		
 		if(direction == 1 ) { 
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_LEFT_1, false);
-			sprite = Sprite.PLAYER_TILE_LEFT_1;
+			curSprite = Sprite.PLAYER_TILE_LEFT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_LEFT_2;
+					curSprite = Sprite.PLAYER_TILE_LEFT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_LEFT_3;
+					curSprite = Sprite.PLAYER_TILE_LEFT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_LEFT_4;
+					curSprite = Sprite.PLAYER_TILE_LEFT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_LEFT_5;
+					curSprite = Sprite.PLAYER_TILE_LEFT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_LEFT_6;
+					curSprite = Sprite.PLAYER_TILE_LEFT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_LEFT_7;
+					curSprite = Sprite.PLAYER_TILE_LEFT_7;
 			}
 			}
 		}
@@ -114,25 +137,25 @@ public class Player extends Characters {
 		
 		if(direction == 2 ) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_FORWARD_1, false);
-			sprite = Sprite.PLAYER_TILE_FORWARD_1;
+			curSprite = Sprite.PLAYER_TILE_FORWARD_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_FORWARD_2;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_FORWARD_3;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_FORWARD_4;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_FORWARD_5;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_FORWARD_6;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_FORWARD_7;
+					curSprite = Sprite.PLAYER_TILE_FORWARD_7;
 			}
 			}
 		}
@@ -140,25 +163,25 @@ public class Player extends Characters {
 		
 		if(direction == 3 ) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			sprite = Sprite.PLAYER_TILE_RIGHT_1;
+			curSprite = Sprite.PLAYER_TILE_RIGHT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_RIGHT_2;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_RIGHT_3;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_RIGHT_4;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_RIGHT_5;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_RIGHT_6;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_RIGHT_7;
+					curSprite = Sprite.PLAYER_TILE_RIGHT_7;
 			}
 			}
 		
@@ -168,25 +191,25 @@ public class Player extends Characters {
 		
 		if(direction == 4 ) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			sprite = Sprite.PLAYER_TILE_UPPER_LEFT_1;
+			curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_2;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_3;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_4;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_5;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_6;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_UPPER_LEFT_7;
+					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_7;
 			}
 			}
 		
@@ -196,25 +219,25 @@ public class Player extends Characters {
 		
 		if(direction == 5) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_1;
+			curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_2;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_3;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_4;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_5;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_6;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_UPPER_RIGHT_7;
+					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_7;
 			}
 			}
 		
@@ -224,25 +247,25 @@ public class Player extends Characters {
 		
 		if(direction == 6) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_1;
+			curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_2;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_3;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_4;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_5;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_6;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_DOWN_RIGHT_7;
+					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_7;
 			}
 			}
 		
@@ -253,35 +276,29 @@ public class Player extends Characters {
 		
 		if(direction == 7) {
 			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			sprite = Sprite.PLAYER_TILE_DOWN_LEFT_1;
+			curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_1;
 			if(isWalking) {
 				if(anim % 20 > 10 && anim % 20 < 20) {
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_2;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_2;
 			}
 				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_3;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_3;
 			}
 				if(anim % 40 >= 30 && anim % 40 < 40){
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_4;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_4;
 			}
 				if(anim % 50 >= 40 && anim % 50 < 50){
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_5;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_5;
 			}
 				if(anim % 60 >= 50 && anim % 60 < 60){
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_6;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_6;
 			}
 				if(anim % 70 >= 60 && anim % 70 <= 70){
-					sprite = Sprite.PLAYER_TILE_DOWN_LEFT_7;
+					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_7;
 			}
 			}
-		
 		
 		}
-		
-		
-		
-		
-		
 		
 		}
 	
@@ -295,16 +312,11 @@ public class Player extends Characters {
 	
 	
 	public void render(int SCALING) {
-
-		
-		
-		
-	
 		int[] outputPixels = GameEngine.GetPixels();
-		int[] tilePixels = sprite.getPixels();
+		int[] tilePixels = curSprite.getPixels();
 		
-		int s_height =( sprite.getHeight()*SCALING);
-		int s_width = (sprite.getWidth()*SCALING);
+		int s_height =( curSprite.getHeight()*SCALING);
+		int s_width = (curSprite.getWidth()*SCALING);
 
 		
 		
@@ -320,7 +332,7 @@ public class Player extends Characters {
 			if(yy < 0) continue;
 			for(int x = 0 ; x < s_width; x++) {
 				int xx = x - xPixel;
-				int col = tilePixels[x/SCALING + (y/SCALING) * sprite.getWidth()]; // getting the pixel colour of the tile
+				int col = tilePixels[x/SCALING + (y/SCALING) * curSprite.getWidth()]; // getting the pixel colour of the tile
 				
 				if ( xx >= GameEngine.GetWidth() ) // break if the renderer pointer has exited screen right side
 					break;

@@ -55,7 +55,26 @@ public class GameEngine implements Runnable {
 		currentScene = menu;
 		String SettingsMenuPath = Paths.get("").toAbsolutePath().getParent().toString() + "/res/settings_menu.jpeg";
 		settings= new Settings(m_width, m_height,SettingsMenuPath);
-		//delta = 
+	}
+	
+	
+	/**
+	 * Build a game prototype with the given size.
+	 * @param m_width - game width
+	 * @param m_height - game height
+	 * @param main - Takes an initial scene (Main menu scene)
+	 * @param settings - A defualt settings Scene.
+	 */
+	public GameEngine(int m_width, int m_height, MainMenu main, Settings setting) {
+		this.paused = false;
+		window = new GameWindow(m_width, m_height);
+		pixels = window.getPixels();
+		this.m_height = m_height;
+		soundEngine = new Sound();
+		this.m_width = m_width;
+		this.menu = main;
+		currentScene = main;
+		this.settings = setting;
 	}
 	
 	
@@ -65,12 +84,6 @@ public class GameEngine implements Runnable {
 	 * An update function that updates the game componenets per frame
 	 */
 	private void update() {
-//		if (Keyboard.esc())
-//			this.paused = !this.paused;
-//		if (this.paused && !(currentScene instanceof MainMenu)) {
-//			System.out.println("game paused");
-//			return;
-//		}
 		this.currentScene.update();
 		this.window.update();
 	}
@@ -96,7 +109,6 @@ public class GameEngine implements Runnable {
 		thread = new Thread(this,"Display");
 		thread.start();
 		soundEngine.start();
-		//GameEngine.soundEngine.updateAudio(".//ragmad//sound_engine//themes//got.wav", 7000);
 	}
 	
 	
@@ -160,11 +172,8 @@ public class GameEngine implements Runnable {
 			currentScene = menu;
 		}
 		else if(scene.equals("Settings")) {
-
 			currentScene = settings;
-
 		}
-		
 	}
 	
 	
@@ -178,6 +187,5 @@ public class GameEngine implements Runnable {
 	public static int GetHeight() {return m_height;}
 	//public static double GetDelta()  {return delta;}
 	public static Sound GetSoundEngine() {return soundEngine;}
-	
 }
 //remove getParent()
