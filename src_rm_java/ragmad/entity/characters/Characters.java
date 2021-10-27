@@ -13,9 +13,7 @@ import ragmad.scenes.gamescene.Tile;
 public abstract class Characters extends Entity {
 	protected Sprite sprites;
 	protected int direction = 0;
-	protected boolean isMoving = false;
-	public boolean colliding = false;
-	
+	protected boolean isMoving = false;	
 	/**
 	 * Takes care if the movement of the character.
 	 * @dirX the offset which will update the x motion
@@ -61,7 +59,7 @@ public void update() {}
 	 * @map it stores the worlds map
 	 * @colorsMap A hash map of colors which returns tile
 	 * */
-public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
+private boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
 		boolean solid = false;		
 		int playerWidth = sprites.getWidth() ;
 		int playerHeight = sprites.getHeight();
