@@ -12,8 +12,6 @@ import ragmad.scenes.gamescene.Tile;
 
 public class Player extends Characters {
 	private Sprite sprite;
-	private Map map;
-	private HashMap<Integer, Tile> colorsMap;
 	private int anim = 0;
 	private boolean isWalking = false;
 	public Player() {
@@ -40,8 +38,7 @@ public class Player extends Characters {
 	 * */
 	
 	public void update(int frameMovement, Map map , HashMap<Integer, Tile> colorsMap ) {
-		this.map = map;
-		this.colorsMap = colorsMap;
+
 		
 		if(anim < 7500) anim++;
 		else anim = 0;

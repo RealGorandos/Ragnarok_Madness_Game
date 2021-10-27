@@ -67,7 +67,7 @@ private boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Ti
 		int[] n = map.getTileAt(-x ,-y , (int)(GameScene.xOffset - (playerWidth/2) + dirX),(int) (GameScene.yOffset -  (playerHeight - 14)  + dirY));
 		if(n != null) {
 			if( map.tileExists(n[0], n[1])) {
-				solid = solid || colorsMap.get(map.getMap()[(n[0])+ (n[1])*map.getWidth()]).isSolid();
+				solid = colorsMap.get(map.getMap()[(n[0])+ (n[1])*map.getWidth()]).isSolid();
 				}
 			}
 
