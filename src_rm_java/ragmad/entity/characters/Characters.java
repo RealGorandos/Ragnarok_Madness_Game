@@ -11,7 +11,7 @@ import ragmad.scenes.gamescene.Map;
 import ragmad.scenes.gamescene.Tile;
 
 public abstract class Characters extends Entity {
-	protected Sprite sprites;
+	public Sprite sprites;
 
 	public int getDirection() {
 		return direction;
@@ -64,7 +64,7 @@ public void update() {}
 	 * @map it stores the worlds map
 	 * @colorsMap A hash map of colors which returns tile
 	 * */
-private boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
+public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
 		boolean solid = false;		
 		int playerWidth = sprites.getWidth() ;
 		int playerHeight = sprites.getHeight();
