@@ -7,6 +7,7 @@ import ragmad.scenes.gamescene.GameScene;
 public abstract class Entity {
 	public int x, y;
 	public boolean remove = false;
+	
 	protected final Random random = new Random();
 	
 	public void update() {	}

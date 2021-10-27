@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class GameScene implements Scene{
 
 	HashMap<Integer, Tile> hashmap;
-	public static int xOffset, yOffset;
+	public static double xOffset, yOffset;
 	public final static int SCALING = 2;  // Change it if you want to see different scalings. 
 	int xCord;
 	int yCord;
@@ -31,7 +31,7 @@ public class GameScene implements Scene{
 		xCord = 0;
 		yCord = 0;
 		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
-		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
+		yOffset = (GameEngine.GetHeight()/2);		//For testing change all offset variables to player.y
 		this.map = new Map();
 		player = new Player();
 	}
@@ -65,20 +65,18 @@ public class GameScene implements Scene{
 	@Override
 	public void update() {
 		frameMovement = 5;// (int)(5.0 *  (GameEngine.GetDelta())); /// <--- BUG: Delta Time is not set properly.
-		player.update(frameMovement, this.map);
+		player.update(frameMovement, this.map, this.hashmap);
 
-		
-		if(Keyboard.isUp()) yOffset+=frameMovement;
-		if(Keyboard.isDown()) yOffset-=frameMovement;
-		if(Keyboard.isRight()) xOffset-=frameMovement;
-		if(Keyboard.isLeft()) xOffset+=frameMovement;
-		
+			/*if(Keyboard.isUp()) yOffset+=frameMovement;
+			if(Keyboard.isDown()) yOffset-=frameMovement;
+			if(Keyboard.isRight()) xOffset-=frameMovement;
+			if(Keyboard.isLeft()) xOffset+=frameMovement;*/
 
 		if (Keyboard.esc()) {
 			GameEngine.ChangeScene("Menu");
 		}
 
-		int[] testing = this.map.getTileAt(Mouse.x,Mouse.y,xOffset, yOffset);
+		int[] testing = this.map.getTileAt(Mouse.x,Mouse.y,(int)xOffset,(int) yOffset);
 		if(testing == null) return;
 		
 	}
@@ -99,7 +97,7 @@ public class GameScene implements Scene{
 				/*THIS WHOLE MESS SHOULD BE CLEANED!!!*/
 				switch(this.map.getMap()[x+y*map.getWidth()] ) {
 				case 0xff0032ff:
-					if(anchorExists(x,y,Tile.PORTAL1, 0xff0032ff)) Tile.PORTAL1.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					if(anchorExists(x,y,Tile.PORTAL1, 0xff0032ff)) Tile.PORTAL1.renderToRaster(x, y, (int)xOffset,(int) yOffset, SCALING);
 					break;
 				case 0xff5d3030:
 					//GameEngine.FULL_WALL.renderToRaster(x, y, xOffset, yOffset, SCALING);
@@ -117,7 +115,7 @@ public class GameScene implements Scene{
 					//Tile.WALL4.renderToRaster(x, y, xOffset, yOffset, SCALING);
 					break;
 				default:
-					Tile.DESERT1.renderToRaster(x, y, xOffset, yOffset, SCALING);
+					Tile.DESERT1.renderToRaster(x, y, (int)xOffset, (int)yOffset, SCALING);
 					break;
 				}
 					

@@ -2,6 +2,8 @@ package ragmad.entity.characters;
 
 import ragmad.scenes.gamescene.Map;
 
+import java.util.HashMap;
+
 import ragmad.GameEngine;
 import ragmad.graphics.sprite.Sprite;
 import ragmad.io.Keyboard;
@@ -11,6 +13,7 @@ import ragmad.scenes.gamescene.Tile;
 public class Player extends Characters {
 	private Sprite sprite;
 	private Map map;
+	private HashMap<Integer, Tile> colorsMap;
 	private int anim = 0;
 	private boolean isWalking = false;
 	public Player() {
@@ -29,10 +32,17 @@ public class Player extends Characters {
 
 	}
 	
+	/**
+	 * A methode which updates the players object (It is thread)
+	 * @frameMovement the movement of the character by pixels
+	 * @Map the world map
+	 * @colorMap hashmap which returns tile by color
+	 * */
 	
-	
-	public void update(int frameMovement, Map map2) {
-	//	int dirX = 0, dirY = 0;
+	public void update(int frameMovement, Map map , HashMap<Integer, Tile> colorsMap ) {
+		this.map = map;
+		this.colorsMap = colorsMap;
+		
 		if(anim < 7500) anim++;
 		else anim = 0;
 		
@@ -44,7 +54,7 @@ public class Player extends Characters {
 		
 		
 		if(xOffset != 0 || yOffset != 0) { 
-			move(xOffset, yOffset, map2);
+			move(xOffset, yOffset, map, colorsMap, sprite);
 			isWalking = true;
 			}else {
 				isWalking = false;
@@ -277,6 +287,14 @@ public class Player extends Characters {
 		
 		
 		}
+	
+	
+	/**
+	 * Method that renders the player on the screen
+	 * 
+	 * @SCALING the scaling rate of the player
+	 * */
+	
 	
 	
 	public void render(int SCALING) {
