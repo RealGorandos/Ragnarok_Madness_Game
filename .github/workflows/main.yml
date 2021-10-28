@@ -28,4 +28,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Build the project using maven
-        run: mvn package --file pom.xml # though this is the default file.
+        run: mvn package --file pom.xml -Djava.awt.headless=true # though this is the default file.
