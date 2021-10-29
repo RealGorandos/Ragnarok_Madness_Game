@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-            os: [ubuntu-latest, windows-latest, macOS-latest]
+            os: [macOS-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -29,7 +29,24 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
+          
+      - name: Check resource
+        run : | 
+          cd res
+          ls
+          cd sounds 
+          echo sound files are:
+          ls
+          cd ..
+          cd ..
+        
+        
+        # Runs a set of commands using the runners shell
+      - name: Compiling, Testing and Packaging with 1 maven step.
+        run: mvn --batch-mode --update-snapshots verify
 
-      # Runs a set of commands using the runners shell
-      - name: Build the project using maven
-        run: mvn package --file pom.xml -Djava.awt.headless=true # though this is the default file.
+      - name: check build exists
+        run : |
+          cd bin/
+          ls -a
+        
