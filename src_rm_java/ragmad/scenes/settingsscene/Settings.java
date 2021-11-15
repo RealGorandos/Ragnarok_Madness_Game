@@ -33,7 +33,7 @@ public class Settings implements Scene {
      * @param m_height - The //////	/	/	/	/	/	/	/	/	/	/
      * @param url - The path of the background photo.
      */
-    public Settings(int m_width, int m_height, String url ) {
+    public Settings(int m_width, int m_height, String url ) { 
         this.m_height = m_height;
         this.m_width = m_width;
 
@@ -79,7 +79,7 @@ public class Settings implements Scene {
         opts2[2] = "800";
         options2 = new Choice[3];
 
-
+ 
         Graphics g = background.getGraphics();
         g.setFont(new Font("Arial Black", Font.BOLD, 20));
         FontMetrics fm = g.getFontMetrics();	// Getting the Fonts settings
@@ -97,7 +97,7 @@ public class Settings implements Scene {
             Rectangle pos = new Rectangle( x_margin , y - fm.getAscent(),
                     this.m_width/4, (int) rect.getHeight());	// Button Background
 
-            options[i] = new Choice(opts[i], pos, x,y);
+            options[i] = new Choice(opts[i], pos, x,y, null);
         }
 
 
@@ -118,8 +118,8 @@ public class Settings implements Scene {
         Rectangle pos2 = new Rectangle( m_width/2+(x_margin ), y - fm.getAscent(),
                 width, (int) rect.getHeight());	// Button Background
         //The y coordinate will be the same
-        options[3] = new Choice(opts[3], pos1, x1,y);
-        options[4] = new Choice(opts[4], pos2, x2,y);
+        options[3] = new Choice(opts[3], pos1, x1,y, null);
+        options[4] = new Choice(opts[4], pos2, x2,y, null);
 
 
         //Blocks that display the values
@@ -135,7 +135,7 @@ public class Settings implements Scene {
             Rectangle pos = new Rectangle( m_width-(x_margin+ m_width/4 ), y - fm.getAscent(),
                     m_width/4, (int) rect.getHeight());	// Button Background
 
-            options2[i] = new Choice(opts2[i], pos, x,y);
+            options2[i] = new Choice(opts2[i], pos, x,y, null);
         }
 
 

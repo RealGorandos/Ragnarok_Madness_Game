@@ -16,44 +16,57 @@ public class Player extends Characters {
 	private Sprite curSprite;
 	private int anim = 0;
 	private boolean isWalking = false;
-//	private Sprite[] backSprites;
-//	private Sprite[] forwardSprites;
-//	private Sprite[] leftSprites;
-//	private Sprite[] rightSprites;
-//	private Sprite[] upLeftSprites;
-//	private Sprite[] upRightSprites;
-//	private Sprite[] downRightSprites;
-//	private Sprite[] downLeftSprites;
+	
+	int animationRows, animationCols;
+	private Sprite[] animationSprites;
+	private HashMap<Direction, Integer> spriteMap;
+	private int currentAnimationCol;
 	
 	
-	/*
-	 * 
-	 * */
-	public Player() {
-		this.x = -GameEngine.GetWidth()/2;
-		this.y = -GameEngine.GetHeight()/2;
-		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
-		curSprite = Sprite.PLAYER_TILE_BACK_1;
-	}
+//	public Player() {
+//		this.x = -GameEngine.GetWidth()/2;
+//		this.y = -GameEngine.GetHeight()/2;	
+//	}
 	
 	
-	/*
-	 * 
-	 * */
-	public Player(Sprite s) {
-		this.x = -GameEngine.GetWidth()/2;
-		this.y = -GameEngine.GetHeight()/2;
-		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
-		curSprite = s;
-	}
 	
 	public Player(int x, int y) {
-		this.x = x;
-		this.y = y;
-		curSprite = Sprite.PLAYER_TILE_BACK_1;
+//		this.x = -GameEngine.GetWidth()/2 - x; // x is input as Positive for moving to the right and negative to the left
+//		this.y = -GameEngine.GetHeight()/2 - y;	 
+		
+		this.x = -x;
+		this.y = -y;
+		
+//		this.x = x;
+//		this.y = y;
+		curSprite = null;
 		//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
-
 	}
+	
+	
+	
+	/**
+	 * A more profissional and dynamic Player class. It can create a player and defines its animation sprites, and directions/animation mapping.
+	 * @param x - This is the X position of the player.	Positive X means move the player Right from the top-left of the screen.
+	 * @param y - This is the Y position of the player. Positive Y means move the player Downwards from the top-left of the screen
+	 * @param animationSprites - This is an array that contains all the Sprites that the player going to use. Define the Sprites in a contigoues order. E.g: Up sprites, then Down direction sprites and so on. Note: Sprites number per direction must be same. 
+	 * @param animationTypes - This is the row counts of the animation sprites. In other words, how many animations types do we have. E.g: Up,Right,Left,Down are 4 animation types.
+	 * @param animationsPerType - This is the count of animations we do have per each direction. E.G: 'animationsPerType = 4' means that we have 4 different animations for walking on a specific direction. Note that all directions will have the same count of animations.
+	 * @param spriteMap - This is a map that maps a Direction to a sprite Row (Animation Type). Note that it relies that the animationSprites contiguous sprites. E.G: UP -> animationType3 (in other words, Row index 3 from the animation Sprites). 
+	 */
+	public Player(int x, int y, Sprite[] animationSprites, int animationTypes, int animationsPerType,  HashMap<Direction, Integer> spriteMap) {
+		this.x = -x; 
+		this.y = -y;
+		this.currentAnimationCol = 0;
+		this.spriteMap = spriteMap;
+		this.animationSprites = animationSprites;
+		this.animationCols = animationsPerType;
+		this.animationRows = animationTypes;
+		this.curSprite = animationSprites[0];
+	}
+	
+	
+	
 	
 	/**
 	 * A methode which updates the players object (It is thread)
@@ -61,12 +74,18 @@ public class Player extends Characters {
 	 * @Map the world map
 	 * @colorMap hashmap which returns tile by color
 	 * */
-	
-	public void update(int frameMovement, Map map , HashMap<Integer, Tile> colorsMap ) {
-		if(anim < 7500) anim++;
-		else anim = 0;
+	public void update(int frameMovement, Map map) {
+
+		anim = (anim+1) & 7; 	// same as anim % 32. But much faster. This here is just an update counter really!
+		if(anim == 0) {
+			this.currentAnimationCol = (currentAnimationCol + 1) % this.animationCols ; //& (this.animationCols - 1);
 		
-		int xOffset =0 ,  yOffset = 0;
+		}
+			
+		
+		 
+		
+		int xOffset = 0 ,  yOffset = 0;
 		if(Keyboard.isUp()) yOffset+=frameMovement;
 		if(Keyboard.isDown()) yOffset-=frameMovement;
 		if(Keyboard.isRight()) xOffset-=frameMovement;
@@ -74,233 +93,19 @@ public class Player extends Characters {
 		
 		
 		if(xOffset != 0 || yOffset != 0) { 
-			move(xOffset, yOffset, map, colorsMap, curSprite);
+			move(xOffset, yOffset, map, map.getColorMap(), curSprite);
 			isWalking = true;
-			}else {
-				isWalking = false;
-			}
-		
-	//	int posX=0, posY= 0;
-		if(direction == 0 )
-		{
-			curSprite = Sprite.PLAYER_TILE_BACK_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_BACK_2;
-				}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_BACK_3;
-				}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_BACK_4;
-				}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_BACK_5;
-				}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_BACK_6;
-				}
-				if(anim % 70 >= 60 && anim % 70 < 70){
-					curSprite = Sprite.PLAYER_TILE_BACK_7;
-				}
-			}
+			int a_r = this.spriteMap.get(direction); // Get the row of the animation sprite we will be animating. 
+			int a_c = this.currentAnimationCol;
+			this.curSprite = this.animationSprites[a_c + a_r * this.animationCols];
+		}else {
+			isWalking = false;
 		}
-		
-		if(direction == 1 ) { 
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_LEFT_1, false);
-			curSprite = Sprite.PLAYER_TILE_LEFT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_LEFT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_LEFT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_LEFT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_LEFT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_LEFT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_LEFT_7;
-			}
-			}
-		}
-		
-		
-		
-		
-		
-		if(direction == 2 ) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_FORWARD_1, false);
-			curSprite = Sprite.PLAYER_TILE_FORWARD_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_FORWARD_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_FORWARD_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_FORWARD_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_FORWARD_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_FORWARD_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_FORWARD_7;
-			}
-			}
-		}
-		
-		
-		if(direction == 3 ) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			curSprite = Sprite.PLAYER_TILE_RIGHT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_RIGHT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_RIGHT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_RIGHT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_RIGHT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_RIGHT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_RIGHT_7;
-			}
-			}
-		
-		
-		}
-		
-		
-		if(direction == 4 ) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_UPPER_LEFT_7;
-			}
-			}
-		
-		
-		}
-		
-		
-		if(direction == 5) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_UPPER_RIGHT_7;
-			}
-			}
-		
-		
-		}
-		
-		
-		if(direction == 6) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_DOWN_RIGHT_7;
-			}
-			}
-		
-		
-		}
-		
-		
-		
-		if(direction == 7) {
-			//Tile.PLAYER = new Tile(0, Sprite.PLAYER_TILE_RIGHT_1, false);
-			curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_1;
-			if(isWalking) {
-				if(anim % 20 > 10 && anim % 20 < 20) {
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_2;
-			}
-				if(anim % 30 >= 20 &&  anim % 30 < 30 ){
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_3;
-			}
-				if(anim % 40 >= 30 && anim % 40 < 40){
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_4;
-			}
-				if(anim % 50 >= 40 && anim % 50 < 50){
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_5;
-			}
-				if(anim % 60 >= 50 && anim % 60 < 60){
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_6;
-			}
-				if(anim % 70 >= 60 && anim % 70 <= 70){
-					curSprite = Sprite.PLAYER_TILE_DOWN_LEFT_7;
-			}
-			}
-		
-		}
-		
-		}
+	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -308,9 +113,6 @@ public class Player extends Characters {
 	 * 
 	 * @SCALING the scaling rate of the player
 	 * */
-	
-	
-	
 	public void render(int SCALING) {
 		int[] outputPixels = GameEngine.GetPixels();
 		int[] tilePixels = curSprite.getPixels();

@@ -12,13 +12,13 @@ import ragmad.scenes.gamescene.Tile;
 
 public abstract class Characters extends Entity {
 	public Sprite sprites;
-
-	public int getDirection() {
-		return direction;
-	}
-
-	protected int direction = 0;
+	protected Direction direction;
 	protected boolean isMoving = false;	
+	
+	
+	
+
+	
 	/**
 	 * Takes care if the movement of the character.
 	 * @dirX the offset which will update the x motion
@@ -29,16 +29,16 @@ public abstract class Characters extends Entity {
 	public void move(int dirX, int dirY, Map map, HashMap<Integer, Tile> colorsMap, Sprite sprites) {
 		this.sprites = sprites;
 		
-		if(dirX > 0) direction = 1;
-		if(dirY > 0) direction = 2;
-		if(dirX < 0) direction = 3;
-		if(dirY < 0) direction = 0;
-		if(dirX > 0 && dirY > 0) direction = 4;
-		if(dirX < 0 && dirY > 0) direction = 5;
-		if(dirX < 0 && dirY < 0) direction = 6;
-		if(dirX > 0 && dirY < 0) direction = 7;
+		if(dirX > 0) direction = Direction.RIGHT;
+		if(dirY > 0) direction = Direction.DOWN;
+		if(dirX < 0) direction = Direction.LEFT;
+		if(dirY < 0) direction = Direction.UP;
+		if(dirX > 0 && dirY > 0) direction = Direction.DOWN_RIGHT;
+		if(dirX < 0 && dirY > 0) direction = Direction.DOWN_LEFT;
+		if(dirX < 0 && dirY < 0) direction = Direction.UP_LEFT;
+		if(dirX > 0 && dirY < 0) direction = Direction.UP_RIGHT;
 		
-
+ 
 		double temp = Math.sqrt(dirX*dirX + dirY*dirY);
 		
 		double modifiedDirX = (3 * dirX/temp);
@@ -53,10 +53,13 @@ public abstract class Characters extends Entity {
 		if(!collision( 2 * modifiedDirX,  0, map, colorsMap)) {
 			GameScene.xOffset += modifiedDirX;
 		}
-
-	
 	}
-public void update() {}
+	
+	
+	
+	public void update() {}
+	
+	
 	/**
 	 * Method which returns if a tile is collidable or not
 	 * @dirX the pixels which need to be checked before moving on x-axis
@@ -64,7 +67,7 @@ public void update() {}
 	 * @map it stores the worlds map
 	 * @colorsMap A hash map of colors which returns tile
 	 * */
-public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
+	public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
 		boolean solid = false;		
 		int playerWidth = sprites.getWidth() ;
 		int playerHeight = sprites.getHeight();
@@ -75,9 +78,11 @@ public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Til
 				solid = colorsMap.get(map.getMap()[(n[0])+ (n[1])*map.getWidth()]).isSolid();
 				}
 			}
-
-
 		return solid;
-		
-		}
+	}
+	
+	
+	public Direction getDirection() {
+		return direction;
+	}
 }

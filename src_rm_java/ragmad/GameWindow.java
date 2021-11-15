@@ -28,7 +28,7 @@ public class GameWindow extends JFrame{
 		this.w_width = width;
 		this.w_height = height;
 		this.gc = new GameCanvas(this.w_width, this.w_height);
-		
+		 
 		/*Initializing the frame values*/
 		this.setPreferredSize(new Dimension(this.w_width, this.w_height)); // Setting window size
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Closing the window if the "x" button is pressed

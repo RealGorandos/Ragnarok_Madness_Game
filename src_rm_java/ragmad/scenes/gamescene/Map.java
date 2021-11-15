@@ -21,15 +21,21 @@ public class Map {
 	private int width,height;
 	private String path;
 	HashMap<Integer, Tile> hashmap;
+	private int tileWidth, tileHeight;
+	
 
 	//map is given in the constructor
-	public Map(String path,HashMap hm) {
+	public Map(String path, HashMap hm) {
 		this.path = path;
+		this.tileWidth = Tile.TILE_WIDTH;
+		this.tileHeight = Tile.TILE_HEIGHT;
+		
+		
 		try {
 			BufferedImage mapImage = ImageIO.read(new File(path)); 	// Loading an image to the memory
 			this.width = mapImage.getWidth();
 			this.height = mapImage.getHeight();
-			this.hashmap=hm;
+			this.hashmap = hm;
 			map = new int [this.width*this.height];
 			mapImage.getRGB(0, 0, this.width, this.height, map, 0, this.width); 	//Copies the loaded image pixels to our pixels-grid
 			
@@ -37,12 +43,20 @@ public class Map {
 			System.out.println("Error with loading the image from the path: " + path );
 			e.printStackTrace();
 		}
+		
 	}
 
-	//method which receives an int i.e color, return tile type
-	public Tile getTile(Integer color){
-		return this.hashmap.get(color);
-	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public Map() {
 		this.width = 0;
 		this.height = 0;
@@ -64,8 +78,8 @@ public class Map {
 	*/
 	public int[] getTileAt(int mouseX,int mouseY, int xOffset, int yOffset) {
         //	half width, height... MUST BE SUBSTITUTED PROPERLY
-        var tileWidth = (Sprite.DESERT_TILE_1.getWidth() * GameScene.SCALING) >> 1; 
-        var tileHeight = (Sprite.DESERT_TILE_1.getHeight() * GameScene.SCALING) >> 1;
+        var tileWidth = (this.tileWidth * GameScene.SCALING) >> 1; 
+        var tileHeight = (this.tileHeight * GameScene.SCALING) >> 1;
         
         
         // TOP LEFT CORNER
@@ -120,7 +134,7 @@ public class Map {
 	    if (xShift) {
 	      startTileX--;
 	    } else {
-	      startTileY++;
+	      startTileY++; 
 	    }
 	    xShift = !xShift;
 	  }
@@ -187,9 +201,11 @@ public class Map {
 	 * @param columnWidth - the column width which is half of the tile
 	 * @return - The column number
 	 */
-	public int getColumn(int mouseX, int firstTileXShiftAtScreen, int columnWidth) {
-		return (mouseX - firstTileXShiftAtScreen) / columnWidth;
-	}
+	public int getColumn(int mouseX, int firstTileXShiftAtScreen, int columnWidth) {return (mouseX - firstTileXShiftAtScreen) / columnWidth;}
+	public HashMap<Integer, Tile> getColorMap(){return this.hashmap;}
+	//method which receives an int i.e color, return tile type
+	public Tile getTile(Integer color){ return this.hashmap.get(color); }
+	
 }
 
 

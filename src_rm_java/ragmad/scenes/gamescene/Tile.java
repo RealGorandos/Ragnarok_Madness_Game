@@ -21,14 +21,11 @@ public class Tile {
 	
 	
 	/*These are the normalized base tile height and width. Change it if you want to have anotehr system in your rendering process.*/
-	private final int TILE_WIDTH = 64;
-	private final int TILE_HEIGHT = 32;
+	public static final int TILE_WIDTH = 64;
+	public static final int TILE_HEIGHT = 32;
 	
 	
-	/*For testing Tiles.*/
-	public static Tile DESERT1 = new Tile(0, Sprite.DESERT_TILE_1, false);
-	public static Tile DESERT2 = new Tile(20, Sprite.DESERT_TILE_2, false);
-	public static Tile PORTAL1 = new Tile(0, Sprite.PORTAL_TILE_1, true);
+	
 	
 	public static Tile PLAYER ;//= new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
 	/*public static Tile PLAYER2 = new Tile(0, Sprite.PLAYER_TILE_BACK_2, false);

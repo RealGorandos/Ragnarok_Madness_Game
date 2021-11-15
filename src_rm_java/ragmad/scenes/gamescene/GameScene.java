@@ -14,7 +14,7 @@ public class GameScene implements Scene{
 
 	HashMap<Integer, Tile> hashmap;
 	public static double xOffset, yOffset;
-	public final static int SCALING = 2;  // Change it if you want to see different scalings. 
+	public static int SCALING = 1;  // Change it if you want to see different scalings. 
 	int xCord;
 	int yCord;
 	int frameMovement;
@@ -25,31 +25,44 @@ public class GameScene implements Scene{
 	
 	/// _________________________ Constructor Area_________________________________
 	
-	public GameScene(int width, int height) {
+//	public GameScene(int width, int height) {
+//		this.m_height = height;
+//		this.m_width = width;
+//		xCord = 0; 
+//		yCord = 0;
+//		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
+//		yOffset = (GameEngine.GetHeight()/2);		//For testing change all offset variables to player.y
+//		this.map = new Map();
+//		player = new Player(GameEngine.GetWidth()/2, GameEngine.GetHeight()/2);
+//	}
+	
+	
+//	public GameScene(int width, int height, String mapPath) {
+//		this.m_height = height;
+//		this.m_width = width;
+//		xCord = 0;
+//		yCord = 0;
+//		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
+//		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
+//		hashmap=new HashMap<Integer, Tile>();
+//		this.hashmap.put( 0xff0032ff,Tile.PORTAL1);
+//		this.hashmap.put( 0xff8e4a4a,Tile.DESERT1);
+//		this.map = new Map(mapPath,hashmap); //Our map loaded from a file
+//
+//		player = new Player(GameEngine.GetWidth()/2, GameEngine.GetHeight()/2);
+//	}
+	
+	
+	
+	public GameScene(int width, int height, Map map, Player player) {
 		this.m_height = height;
 		this.m_width = width;
 		xCord = 0;
 		yCord = 0;
-		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
-		yOffset = (GameEngine.GetHeight()/2);		//For testing change all offset variables to player.y
-		this.map = new Map();
-		player = new Player();
-	}
-	
-	
-	public GameScene(int width, int height, String mapPath) {
-		this.m_height = height;
-		this.m_width = width;
-		xCord = 0;
-		yCord = 0;
-		xOffset  = GameEngine.GetWidth()/2 ; 	//For testing change all offset variables to player.y
+		xOffset = GameEngine.GetWidth()/2; 		//For testing change all offset variables to player.y
 		yOffset = GameEngine.GetHeight()/2;		//For testing change all offset variables to player.y
-		hashmap=new HashMap<Integer, Tile>();
-		this.hashmap.put( 0xff0032ff,Tile.PORTAL1);
-		this.hashmap.put( 0xff8e4a4a,Tile.DESERT1);
-		this.map = new Map(mapPath,hashmap); //Our map loaded from a file
-
-		player = new Player();
+		this.map = map;
+		this.player = player;
 	}
 	
 	
@@ -65,7 +78,7 @@ public class GameScene implements Scene{
 	@Override
 	public void update() {
 		frameMovement = 5;// (int)(5.0 *  (GameEngine.GetDelta())); /// <--- BUG: Delta Time is not set properly.
-		player.update(frameMovement, this.map, this.hashmap);
+		player.update(frameMovement, this.map);
 
 			/*if(Keyboard.isUp()) yOffset+=frameMovement;
 			if(Keyboard.isDown()) yOffset-=frameMovement;
@@ -94,31 +107,12 @@ public class GameScene implements Scene{
 	public void render() {
 		for(int x = this.map.getWidth() - 1; x >= 0 ; x--) {
 			for(int y = 0 ; y < this.map.getHeight(); y++) {
-				/*THIS WHOLE MESS SHOULD BE CLEANED!!!*/
-				switch(this.map.getMap()[x+y*map.getWidth()] ) {
-				case 0xff0032ff:
-					if(anchorExists(x,y,Tile.PORTAL1, 0xff0032ff)) Tile.PORTAL1.renderToRaster(x, y, (int)xOffset,(int) yOffset, SCALING);
-					break;
-				case 0xff5d3030:
-					//GameEngine.FULL_WALL.renderToRaster(x, y, xOffset, yOffset, SCALING);
-					break;
-				case 0xff612929: // First left
-					//Tile.WALL1.renderToRaster(x, y, xOffset, yOffset, SCALING);
-					break;
-				case 0xff7f7f7f:
-					//Tile.WALL2.renderToRaster(x, y, xOffset, yOffset, SCALING);
-					break;
-				case 0xff414040:
-					//Tile.WALL3.renderToRaster(x, y, xOffset, yOffset, SCALING);
-					break;
-				case 0xff000000:
-					//Tile.WALL4.renderToRaster(x, y, xOffset, yOffset, SCALING);
-					break;
-				default:
-					Tile.DESERT1.renderToRaster(x, y, (int)xOffset, (int)yOffset, SCALING);
-					break;
+				int id = this.map.getMap()[x+y*map.getWidth()];
+				Tile t = this.map.getTile(id);
+				if(anchorExists(x, y, t, id)) {
+					t.renderToRaster(x, y, (int)xOffset,(int) yOffset, SCALING);
 				}
-					
+
 			}
 		}
 		player.render(1);
@@ -138,6 +132,14 @@ public class GameScene implements Scene{
 	private boolean anchorExists(int x, int y, Tile t, int id) {
 		 return this.map.getMap()[ ( x - (t.getIsoWidth() - 1)) + (y + (t.getIsoHeight() - 1)) *map.getWidth()] == id;
 	}
+	
+	
+	
+	public static void zoomIn() { SCALING = (SCALING < 2 )? SCALING + 1 : 2 ;}
+	public static void zoomOut() { SCALING = (SCALING > 1 )? SCALING - 1 : 1 ;}
+	
+	
+	
 }
 
 

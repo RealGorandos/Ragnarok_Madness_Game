@@ -114,7 +114,7 @@ public class Sound extends Thread {
 			update = true;
 			this.currentPath = currentPath;
 			this.delay = delay;
-		
+		 
         }
 	}
 	

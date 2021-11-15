@@ -7,8 +7,7 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		GameEngine game = new GameEngine( WIDTH, HEIGHT );
-		game.start();
+		Game game = new Game(WIDTH, HEIGHT ); 
 	}
 
 }

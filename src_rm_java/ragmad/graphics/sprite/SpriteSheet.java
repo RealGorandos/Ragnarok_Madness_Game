@@ -17,14 +17,6 @@ import javax.imageio.ImageIO;
 public class SpriteSheet {
 
 	
-	/*In Game SpriteSheets*/
-	public final static SpriteSheet DESERT_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/desert_res_orig.png");
-	public final static SpriteSheet PORTAL_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/porotals.png");
-	public final static SpriteSheet PLAYER_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent().toString() + "/res/jaden_yuki_2.png");
-
-
-	
-	
 	String path;
 	BufferedImage image;
 	int width, height; 
@@ -115,7 +107,7 @@ public class SpriteSheet {
 	public int getHeight() {return this.height;}
 	public int[] getPixels() {return this.pixels;}
 	
-	public void reload(String newPath) {
+	public void reload(String newPath) { 
 		int[] tempPixels = null;
 		try {
 			image = ImageIO.read(new File(newPath));

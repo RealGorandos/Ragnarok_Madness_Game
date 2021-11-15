@@ -15,22 +15,21 @@ public class GameEngine implements Runnable {
 
 	private GameWindow window;
 
-	public static Scene getCurrentScene() {
-		return currentScene;
-	}
+
 
 	private static Scene currentScene;
-	
-	private static int[] pixels; 	// Every class should use this pixels to render!!
 	static MainMenu menu;
 	static Settings settings;
+	static GameScene gamescene;
+	
 	private static Sound soundEngine;
 	
 	private Thread thread;
 	private boolean running;
-	public static int frames_per_sec=60;
+	public static int frames_per_sec = 60;
+	
+	private static int[] pixels; 	// Every class should use this pixels to render!!
 	private static int m_width;
-
 	private static int m_height;
 	
 	private boolean paused;
@@ -43,39 +42,35 @@ public class GameEngine implements Runnable {
 	 * @param m_width - game width
 	 * @param m_height - game height
 	 */
-	public GameEngine(int m_width, int m_height) {
+	public GameEngine(int width, int height) {
+		m_height = height;
+		m_width = width;
 		this.paused = false;
-		window = new GameWindow(m_width, m_height);
+		
+		window = new GameWindow(width, height);
 		pixels = window.getPixels();
-		this.m_height = m_height;
 		soundEngine = new Sound();
-		this.m_width = m_width;
-		String background_path =  Paths.get("").toAbsolutePath().getParent().toString() + "/res/main_menu_temp.jpg";	// TESTING
-		menu = new MainMenu(m_width, m_height, background_path);	// TESTING
-		currentScene = menu;
-		String SettingsMenuPath = Paths.get("").toAbsolutePath().getParent().toString() + "/res/settings_menu.jpeg";
-		settings= new Settings(m_width, m_height,SettingsMenuPath);
 	}
 	
-	
-	/**
-	 * Build a game prototype with the given size.
-	 * @param m_width - game width
-	 * @param m_height - game height
-	 * @param main - Takes an initial scene (Main menu scene)
-	 * @param settings - A defualt settings Scene.
-	 */
-	public GameEngine(int m_width, int m_height, MainMenu main, Settings setting) {
-		this.paused = false;
-		window = new GameWindow(m_width, m_height);
-		pixels = window.getPixels();
-		this.m_height = m_height;
-		soundEngine = new Sound();
-		this.m_width = m_width;
-		this.menu = main;
-		currentScene = main;
-		this.settings = setting;
-	}
+//	
+//	/**
+//	 * Build a game prototype with the given size.
+//	 * @param m_width - game width
+//	 * @param m_height - game height
+//	 * @param main - Takes an initial scene (Main menu scene)
+//	 * @param settings - A defualt settings Scene.
+//	 */
+//	public GameEngine(int m_width, int m_height, MainMenu main, Settings setting) {
+//		this.paused = false;
+//		window = new GameWindow(m_width, m_height);
+//		pixels = window.getPixels();
+//		this.m_height = m_height; 
+//		soundEngine = new Sound();
+//		this.m_width = m_width;
+//		this.menu = main;
+//		currentScene = main;
+//		this.settings = setting;
+//	}
 	
 	
 //-------------- Methods Area --------------------
@@ -148,6 +143,9 @@ public class GameEngine implements Runnable {
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Stop the threading which stops the program
 	 */
@@ -162,20 +160,25 @@ public class GameEngine implements Runnable {
 	
 	
 	
+	
+	
+	
 	/*Map should be changed Dynamically later*/
 	public static synchronized void ChangeScene(String scene) {
 		if(scene.equals("GameScene")){
-			String mapPath = Paths.get("").toAbsolutePath().getParent().toString() + "/res/map4.png";
-			currentScene = new GameScene(m_width, m_height,mapPath);
+			currentScene = gamescene;
 		}
 		else if(scene.equals("Menu")) {
-			currentScene = menu;
+			currentScene = menu; 
 		}
 		else if(scene.equals("Settings")) {
 			currentScene = settings;
 		}
 	}
-	
+//---------------------- Setters Area -----------------
+	public static void InitGameScene(GameScene gs) 	{gamescene = gs; currentScene = gamescene;}
+	public static void InitMainMenu(MainMenu mm) 	{menu = mm; currentScene = menu;}
+	public static void InitSettings(Settings st)	 {settings = st; currentScene = settings;}
 	
 //------------------- Getters Area -----------------------
 	/**
@@ -187,5 +190,6 @@ public class GameEngine implements Runnable {
 	public static int GetHeight() {return m_height;}
 	//public static double GetDelta()  {return delta;}
 	public static Sound GetSoundEngine() {return soundEngine;}
+	public static Scene getCurrentScene() {return currentScene;}
 }
 //remove getParent()

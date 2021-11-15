@@ -11,6 +11,8 @@ import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.gamescene.Map;
 import ragmad.scenes.gamescene.Tile;
 import ragmad.graphics.sprite.SpriteSheet;
+import ragmad.entity.characters.Direction;
+
 
 import java.awt.*;
 import java.nio.file.Paths;
@@ -24,94 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerMovement {
 
-
-    @BeforeAll
-    public static void init(){
-        SpriteSheet.PLAYER_SHEET.reload("res/jaden_yuki_2.png");
-        SpriteSheet.PORTAL_SHEET.reload("res/porotals.png");
-        SpriteSheet.DESERT_SHEET.reload("res/desert_res_orig.png");
-        System.out.println(SpriteSheet.PLAYER_SHEET.toString());
-        /*MOVING DOWNWARD*/
-        Sprite.PLAYER_TILE_BACK_1.refresh();
-        Sprite.PLAYER_TILE_BACK_2.refresh();
-        Sprite.PLAYER_TILE_BACK_3.refresh();
-        Sprite.PLAYER_TILE_BACK_4.refresh();
-        Sprite.PLAYER_TILE_BACK_5.refresh();
-        Sprite.PLAYER_TILE_BACK_6.refresh();
-        Sprite.PLAYER_TILE_BACK_7.refresh();
-        
-        /*MOVING FORWARD*/
-        Sprite.PLAYER_TILE_FORWARD_1.refresh();
-        Sprite.PLAYER_TILE_FORWARD_2.refresh();
-        Sprite.PLAYER_TILE_FORWARD_3.refresh();
-        Sprite.PLAYER_TILE_FORWARD_4.refresh();
-        Sprite.PLAYER_TILE_FORWARD_5.refresh();
-        Sprite.PLAYER_TILE_FORWARD_6.refresh();
-        Sprite.PLAYER_TILE_FORWARD_7.refresh();
-        
-        /*MOVING LEFT*/
-        Sprite.PLAYER_TILE_LEFT_1.refresh();
-        Sprite.PLAYER_TILE_LEFT_2.refresh();
-        Sprite.PLAYER_TILE_LEFT_3.refresh();
-        Sprite.PLAYER_TILE_LEFT_4.refresh();
-        Sprite.PLAYER_TILE_LEFT_5.refresh();
-        Sprite.PLAYER_TILE_LEFT_6.refresh();
-        Sprite.PLAYER_TILE_LEFT_7.refresh();
-        
-        
-        /*MOVING RIGHT*/
-        Sprite.PLAYER_TILE_RIGHT_1.refresh();
-        Sprite.PLAYER_TILE_RIGHT_2.refresh();
-        Sprite.PLAYER_TILE_RIGHT_3.refresh();
-        Sprite.PLAYER_TILE_RIGHT_4.refresh();
-        Sprite.PLAYER_TILE_RIGHT_5.refresh();
-        Sprite.PLAYER_TILE_RIGHT_6.refresh();
-        Sprite.PLAYER_TILE_RIGHT_7.refresh();
-
-        /*UPPER LEFT*/
-        Sprite.PLAYER_TILE_UPPER_LEFT_1.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_2.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_3.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_4.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_5.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_6.refresh();
-        Sprite.PLAYER_TILE_UPPER_LEFT_7.refresh();
-        
-        /*UPPER RIGHT*/
-        Sprite.PLAYER_TILE_UPPER_RIGHT_1.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_2.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_3.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_4.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_5.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_6.refresh();
-        Sprite.PLAYER_TILE_UPPER_RIGHT_7.refresh();
-        
-        
-        /*DOWN RIGHT*/
-        Sprite.PLAYER_TILE_DOWN_RIGHT_1.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_2.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_3.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_4.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_5.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_6.refresh();
-        Sprite.PLAYER_TILE_DOWN_RIGHT_7.refresh();
-        
-        /*DOWN LEFT*/
-        Sprite.PLAYER_TILE_DOWN_LEFT_1.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_2.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_3.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_4.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_5.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_6.refresh();
-        Sprite.PLAYER_TILE_DOWN_LEFT_7.refresh();
-    }
-
-
-
+    
 
 
     @Test
     void movingThePlayerInAllDirectionsWorks(){
+
         ArrayList<Point> directions= new ArrayList<>(
                 Arrays.asList(
                         new Point(1,0), //Moving to  east
@@ -125,31 +45,34 @@ public class PlayerMovement {
 
                 )
         );
-        ArrayList<Integer> expectedDirection = new ArrayList<>(
+
+        ArrayList<Direction> expectedDirection = new ArrayList<>(
                 Arrays.asList(
-                        1,
-                        3,
-                        2,
-                        0,
-                        4,
-                        5,
-                        7,
-                        6
+                        Direction.RIGHT,
+                        Direction.LEFT,
+                        Direction.DOWN,
+                        Direction.UP,
+                        Direction.DOWN_RIGHT,
+                        Direction.DOWN_LEFT,
+                        Direction.UP_RIGHT,
+                        Direction.UP_LEFT
                 )
         );
 
 
 
+        Sprite DESERT_TILE_1 = new Sprite(new SpriteSheet("res/desert_res_orig.png"), 0, 0, 64, 32);
+        Sprite sprite = new Sprite(new SpriteSheet("res/jaden_yuki_2.png"), 0, 0, 51, 84);
 
-        Sprite sprite = Sprite.PLAYER_TILE_BACK_1;
         String mapPath = "res/test_collision.png";
         HashMap<Integer, Tile> hashmap = new HashMap<Integer, Tile>();
-        hashmap.put( 0xff000000,Tile.DESERT1);
+        hashmap.put( 0xff000000, new Tile(0, DESERT_TILE_1, false));
         Map map = new Map(mapPath, hashmap);
+
         Player player = new Player(-100,0);
         for (int i=0;i<directions.size();i++){
-            player.move(directions.get(i).x,directions.get(i).y,map,hashmap,sprite);
-            assertEquals(player.getDirection(),expectedDirection.get(i));
+            player.move(directions.get(i).x, directions.get(i).y, map, hashmap,sprite);
+            assertEquals(player.getDirection(), expectedDirection.get(i));
         }
     }
 
@@ -158,13 +81,16 @@ public class PlayerMovement {
 
     @Test
     void checkGettingTileAtWorks(){
-
+        Sprite PORTAL_1 = new Sprite(new SpriteSheet("res/porotals.png"), 0, 0, 64, 32);
+        
         String mapPath = "res/test_collision.png";
         HashMap<Integer, Tile> hashmap = new HashMap<Integer, Tile>();
-        hashmap.put( 0xff000000,Tile.PORTAL1);
+        hashmap.put( 0xff000000,  new Tile(0, PORTAL_1, true));
         Map map = new Map(mapPath,hashmap);
+        
         int[] n = map.getTileAt(100 ,0 , 0, 0);
         int id = map.getMap()[n[0] + n[1] * map.getWidth()];
+
         assertTrue(map.getTile(id).isSolid());
     }
 
@@ -174,14 +100,18 @@ public class PlayerMovement {
 
     @Test
     void checkIfPlayerCollisionWork(){
-        Sprite sprite = Sprite.PLAYER_TILE_BACK_1;
+        Sprite sprite = new Sprite(new SpriteSheet("res/jaden_yuki_2.png"), 0, 0, 51, 84);
+        Sprite PORTAL_1 = new Sprite(new SpriteSheet("res/porotals.png"), 0, 0, 64, 32);
+
         String mapPath = "res/test_collision.png";
         HashMap<Integer, Tile> hashmap = new HashMap<Integer, Tile>();
-        hashmap.put( 0xff000000,Tile.PORTAL1);
+        hashmap.put( 0xff000000, new Tile(0, PORTAL_1, true));
+
         Map map = new Map(mapPath,hashmap);
         Player player = new Player(-100,0);
-        player.sprites=sprite;
-        assertTrue(player.collision(1,0,map,hashmap));
+        player.sprites = sprite;
+
+        assertTrue(player.collision(1,0,map, hashmap));
     }
 }
 

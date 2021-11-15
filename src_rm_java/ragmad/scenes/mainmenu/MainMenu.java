@@ -31,13 +31,15 @@ public class MainMenu implements Scene {
 	private Choice[] options;
 	private Sound music;
 	
+	
+	
 	/**
 	 * 
 	 * @param m_width - The width of the main menu. Currently it is the same as the Engine width
 	 * @param m_height - The //////	/	/	/	/	/	/	/	/	/	/
 	 * @param url - The path of the background photo.
 	 */
-	public MainMenu(int m_width, int m_height, String url ) {
+	public MainMenu(int m_width, int m_height, String url, String[] options, String[] optionSounds, String themeSong) {
 		this.m_height = m_height;
 		this.m_width = m_width;
 		
@@ -56,11 +58,10 @@ public class MainMenu implements Scene {
 
 			return;
 		}
-
-		initOptions();
-
+		
+		initOptions(options, optionSounds);
 		if(GameEngine.GetSoundEngine() != null) {
-			GameEngine.GetSoundEngine().updateAudio(MusicClips.MAINMENU.toString(),1000,true);
+			GameEngine.GetSoundEngine().updateAudio(themeSong, 1000, true);
 		}
 	}
 	 
@@ -68,14 +69,12 @@ public class MainMenu implements Scene {
 	/**
 	 * Initializing the game main menu's options. 
 	 */
-	private void initOptions() {
-		String[] opts = new String[3];
-		opts[0] = "Start";
-		opts[1] = "Settings";
-		opts[2] = "Exit";
+	private void initOptions(String[] opts, String[] soundsURLS) {
+		
 
 
-		options = new Choice[3]; 
+		options = new Choice[opts.length]; 
+		
 		
 		Graphics g = background.getGraphics();
 		g.setFont(new Font("Arial Black", Font.BOLD, 20));
@@ -93,7 +92,7 @@ public class MainMenu implements Scene {
 		    Rectangle pos = new Rectangle( x - x_margin , y - fm.getAscent(),
 		    								(int) rect.getWidth() + 2*x_margin, (int) rect.getHeight());	// Button Background
 		    
-		    options[i] = new Choice(opts[i], pos, x,y);
+		    options[i] = new Choice(opts[i], pos, x, y, soundsURLS[i]);
 		}
 		
 		g.dispose();
@@ -131,7 +130,7 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			if(GameEngine.GetSoundEngine() != null)
+			if(GameEngine.GetSoundEngine() != null) 
 				GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
 
 			GameEngine.ChangeScene("GameScene");
@@ -142,9 +141,9 @@ public class MainMenu implements Scene {
 			if(GameEngine.GetSoundEngine() != null)
 				GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
 			
-			GameEngine.ChangeScene("SettingsMenu");
+			GameEngine.ChangeScene("Settings");
 			break;
-		case 2: 
+		case 2:  
 			
 			System.exit(0);
 			
