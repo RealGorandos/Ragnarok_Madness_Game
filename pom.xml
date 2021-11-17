@@ -15,16 +15,77 @@
     <version>1</version>
     <packaging>jar</packaging>
 
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+            </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>3.15.0</version>
+            <configuration>
+            <linkXref>true</linkXref>
+            <sourceEncoding>utf-8</sourceEncoding>
+            <minimumTokens>100</minimumTokens>
+            <targetJdk>1.5</targetJdk>
+            <excludes>
+                <exclude>**/*Bean.java</exclude>
+                <exclude>**/generated/*.java</exclude>
+            </excludes>
+            <excludeRoots>
+                <excludeRoot>target/generated-sources/stubs</excludeRoot>
+            </excludeRoots>
+            </configuration>
+            <reportSets>
+            <reportSet><!-- by default, id = "default" -->
+                <reports><!-- select non-aggregate reports -->
+                <report>pmd</report>
+                <report>cpd</report>
+                </reports>
+            </reportSet>
+            <reportSet><!-- aggregate reportSet, to define in poms having modules -->
+                <id>aggregate</id>
+                <inherited>false</inherited> <!-- don't run aggregate in child modules -->
+                <reports>
+                <report>aggregate-pmd</report>
+                <report>aggregate-cpd</report>
+                </reports>
+            </reportSet>
+            </reportSets>
+        </plugin>
+        </plugins>
+    </reporting>
     <!-- Specifies data about the final deployment (Where it will be built, final name, etc.)-->
     <build>
+
+    
         <sourceDirectory>src_rm_java/ragmad</sourceDirectory>
         <defaultGoal>install</defaultGoal>
         <directory>${project.basedir}/bin</directory>
         <finalName>${project.artifactId}</finalName>
         <testSourceDirectory>src_rm_java/test</testSourceDirectory>
         <testOutputDirectory>${project.basedir}/bin/test</testOutputDirectory>
+       
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+
             <!-- Java Compiler -->
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -72,12 +133,16 @@
 
     <!-- External imported Libraries -->
     <dependencies>
-            <dependency>
+
+           <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>5.4.0</version>
                 <scope>test</scope>
             </dependency>
+
+
+
     </dependencies>
     
 
