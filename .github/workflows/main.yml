@@ -76,7 +76,7 @@ jobs:
           cd bin/site/
           ls -a
         
-      - name : Creatig artifact for javadocs
+      - name : Creatig artifact for PMD reports
         uses: actions/upload-artifact@v2
         with:
             name: report-artifact
