@@ -5,11 +5,7 @@ import ragmad.graphics.sprite.*;
 
 
 
-/**
- * Not being used at the moment.. Needs implementation :/
- * @author Mohido
- *
- */
+
 public class Tile {
 	
 	
@@ -63,6 +59,7 @@ public class Tile {
 	 * @param yCord - Y coordinates of the Isometric coordinates that you want to start rendering at.
 	 * @param xOffset - x pixels offset of the screen.
 	 * @param yOffset - y pixels offset of the screen.
+	 * @param scaling Game scale ratio
 	 */
 	public void renderToRaster(int xCord, int yCord, int xOffset, int yOffset, int scaling) {
 		if(this.zCord > 0)

@@ -41,8 +41,9 @@ public class Sprite {
 	 * @param yCoordinates - The y-Axis (column) in which the sprite exists in the sprite sheet
 	 * @param width - The width of the current sprite. It is considered that the sprite-sheet tiles are all based on the same as the given width
 	 * @param height - The height of the current sprite. It is considered that the sprite-sheet tiles are all based on the same as the given height
-	 * @param xOffset - costum offseting for special sprites in the spritesheet. Note: The offset also preserves original
-	 * @param xPeak- Decides how much to fill before start cutting. It can be - or + to define right and left cropping, up and down.
+	 * @param xOffset - custom x offseting for special sprites in the spritesheet. Note: The offset also preserves original
+	 * @param yOffset - custom y offseting for special sprites in the spritesheet
+	 * @param xCropper- Decides how much to fill before start cutting. It can be - or + to define right and left cropping, up and down.
 	 */
 	public Sprite( SpriteSheet sheet , int xCoordinates , int yCoordinates, int width , int height, int xOffset, int yOffset, int xCropper) {
 		this.sheet = sheet;

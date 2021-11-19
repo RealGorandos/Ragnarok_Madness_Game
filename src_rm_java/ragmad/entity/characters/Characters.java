@@ -21,10 +21,10 @@ public abstract class Characters extends Entity {
 	
 	/**
 	 * Takes care if the movement of the character.
-	 * @dirX the offset which will update the x motion
-	 * @dirY the offset which will update the x motion
-	 * @colorsMap A hash map of colors which returns tile
-	 * @sprites sprites object which update the sprite of the player
+	 * @param dirX the offset which will update the x motion
+	 * @param dirY the offset which will update the x motion
+	 * @param colorsMap A hash map of colors which returns tile
+	 * @param sprites sprites object which update the sprite of the player
 	 * */
 	public void move(int dirX, int dirY, Map map, HashMap<Integer, Tile> colorsMap, Sprite sprites) {
 		this.sprites = sprites;
@@ -62,10 +62,10 @@ public abstract class Characters extends Entity {
 	
 	/**
 	 * Method which returns if a tile is collidable or not
-	 * @dirX the pixels which need to be checked before moving on x-axis
-	 * @dirY the pixels which need to be checked before moving on y-axis
-	 * @map it stores the worlds map
-	 * @colorsMap A hash map of colors which returns tile
+	 * @param dirX the pixels which need to be checked before moving on x-axis
+	 * @param dirY the pixels which need to be checked before moving on y-axis
+	 * @param map it stores the worlds map
+	 * @param colorsMap A hash map of colors which returns tile
 	 * */
 	public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
 		boolean solid = false;		

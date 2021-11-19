@@ -3,6 +3,9 @@ package ragmad.scenes.mainmenu;
 import java.awt.Rectangle;
 import java.io.File;
 
+/**
+ * Choice of options the user clicks on
+ */
 public class Choice {
 
 	public  String name;
@@ -12,6 +15,14 @@ public class Choice {
 	
 	File buttonSound;
 
+	/**
+	 * Options the user can click on
+	 * @param name of the choice
+	 * @param pos
+	 * @param x x-coordinate of the rectangle
+	 * @param y y-coordinate of the rectangle
+	 * @param clickSoundPath path for the click sound
+	 */
 	public Choice(String name, Rectangle pos, int x, int y, String clickSoundPath) {
 		this.name = name;
 		this.frame = pos;

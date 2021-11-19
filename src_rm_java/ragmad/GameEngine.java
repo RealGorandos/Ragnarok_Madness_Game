@@ -11,6 +11,9 @@ import ragmad.scenes.mainmenu.MainMenu;
 import ragmad.scenes.settingsscene.Settings;
 import ragmad.sound_engine.Sound;
 
+/**
+ * Renders the game to the screen
+ */
 public class GameEngine implements Runnable {
 
 	private GameWindow window;
@@ -39,8 +42,8 @@ public class GameEngine implements Runnable {
 //-------------- Constructors Area ---------------
 	/**
 	 * Build a game prototype with the given size.
-	 * @param m_width - game width
-	 * @param m_height - game height
+	 * @param width - game width
+	 * @param height - game height
 	 */
 	public GameEngine(int width, int height) {
 		m_height = height;
@@ -157,13 +160,12 @@ public class GameEngine implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	/*Map should be changed Dynamically later*/
+
+
+	/**
+	 * Changes the current scene to the one provided in parameter
+	 * @param scene scene to be displayed
+	 */
 	public static synchronized void ChangeScene(String scene) {
 		if(scene.equals("GameScene")){
 			currentScene = gamescene;
@@ -176,8 +178,23 @@ public class GameEngine implements Runnable {
 		}
 	}
 //---------------------- Setters Area -----------------
+
+	/**
+	 * Initializes Game Scene to the one specified GameScene Object and sets the current scene to Game Scene.
+	 * @param gs - a GameScene Object
+	 */
 	public static void InitGameScene(GameScene gs) 	{gamescene = gs; currentScene = gamescene;}
+
+	/**
+	 * Initializes Main Menu Scene to the one specified MainMenu Object and sets the current scene to Main Menu.
+	 * @param mm - a MainMenu Object
+	 */
 	public static void InitMainMenu(MainMenu mm) 	{menu = mm; currentScene = menu;}
+
+	/**
+	 * Initializes Settings Scene to the one specified Settings Object and sets the current scene to Settings Scene
+	 * @param st - a Settings Object
+	 */
 	public static void InitSettings(Settings st)	 {settings = st; currentScene = settings;}
 	
 //------------------- Getters Area -----------------------
@@ -186,10 +203,30 @@ public class GameEngine implements Runnable {
 	 * @return - The pixels array in which game components should render into. It will be copied to the GameCanvas Image
 	 */
 	public static synchronized int[] GetPixels() {return pixels;}
+
+	/**
+	 * Get the width of the window
+	 * @return width of type integer
+	 */
 	public static int GetWidth() {return m_width;}
+
+	/**
+	 * Get height of the window
+	 * @return height of type integer
+	 */
 	public static int GetHeight() {return m_height;}
 	//public static double GetDelta()  {return delta;}
+
+	/**
+	 * Gets the sound engine
+	 * @return an instance of the sound engine
+	 */
 	public static Sound GetSoundEngine() {return soundEngine;}
+
+	/**
+	 * Gets the current scene being displayed on the screen
+	 * @return an instance of the current scene
+	 */
 	public static Scene getCurrentScene() {return currentScene;}
 }
 //remove getParent()

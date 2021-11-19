@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
 
+/**
+ * GUI of the setting menu in the game
+ */
 public class Settings implements Scene {
 
     // Background image...
@@ -30,7 +33,7 @@ public class Settings implements Scene {
     /**
      *
      * @param m_width - The width of the settings menu. Currently it is the same as the Engine width
-     * @param m_height - The //////	/	/	/	/	/	/	/	/	/	/
+     * @param m_height -  The width of the settings menu
      * @param url - The path of the background photo.
      */
     public Settings(int m_width, int m_height, String url ) { 
@@ -218,7 +221,7 @@ public class Settings implements Scene {
 
 
     /**
-     * Renders the Settings Menu. Renders the main background image then renders the buttons on top of it
+     * Renders the Settings Menu, renders the main background image then renders the buttons on top of it
      */
     @Override
     public void render() {
@@ -233,10 +236,8 @@ public class Settings implements Scene {
     }
 
 
-
     /**
-     * Render the main background image to the scene buffer. After this function is called, the scene buffer (background in this case)
-     *  will contain a picture
+     * Render the main background image to the scene buffer. After this function is called, the scene buffer (background in this case) will contain a picture
      */
     private void renderBackground() {
         int[] image = ((DataBufferInt)this.backgroundImage.getRaster().getDataBuffer()).getData();

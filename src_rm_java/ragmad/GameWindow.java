@@ -21,8 +21,8 @@ public class GameWindow extends JFrame{
 	
 	/**
 	 * Creates a game window instance. Note that initWindow() should be called to start the window.
-	 * @param width
-	 * @param height
+	 * @param width width(Integer) of the game window.
+	 * @param height height (Integer) of the game window.
 	 */
 	public GameWindow(int width, int height) {
 		this.w_width = width;

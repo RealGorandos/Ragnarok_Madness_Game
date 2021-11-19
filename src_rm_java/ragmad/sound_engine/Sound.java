@@ -15,9 +15,15 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Sound Engine for the game.
+ */
 public class Sound extends Thread {
 
-
+	/**
+	 * Checks if a clip is running
+	 * @return true if clip is running otherwise false
+	 */
 	public boolean isClipRunning() {
 		return clipRunning;
 	}
@@ -78,10 +84,13 @@ public class Sound extends Thread {
 		
 		this.openAudio(currentPath, delay);
 	}
-	
 
-	
-	
+
+	/**
+	 * Opens the audio
+	 * @param path file path of the music clip
+	 * @param ms
+	 */
 	
 	public void openAudio(String path, long ms) {
 		try {
@@ -101,12 +110,14 @@ public class Sound extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
+
+
+	/**
+	 * updates the audio to a new one
+	 * @param currentPath
+	 * @param delay
+	 * @param continous
+	 */
 	public void updateAudio(String currentPath, long delay, boolean continous) {
 		synchronized (this)
         {
@@ -117,14 +128,20 @@ public class Sound extends Thread {
 		 
         }
 	}
-	
+
+	/**
+	 * Pause the current music clip
+	 */
 	public void pauseSound() {
 		clipTimePosition = clip.getMicrosecondPosition();
 		clip.stop();
 		clipRunning=false;
 
 	}
-	
+
+	/**
+	 * Resumes the music clip
+	 */
 	public void resumeSound(){
 		clip.setMicrosecondPosition(clipTimePosition);
 		clip.start(); 
