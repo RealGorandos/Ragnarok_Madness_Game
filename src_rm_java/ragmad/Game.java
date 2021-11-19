@@ -24,18 +24,18 @@ public class Game {
  
 	
 	/*Sound Paths*/
-    final String MUSIC_GOT_URL = "res/sounds/got.wav";
-    final String SOUND_SLASH_URL =  "res/sounds/button_sound.wav";
+    final String MUSIC_GOT_URL = Paths.get("").toAbsolutePath().getParent()  + "/res/sounds/got.wav";
+    final String SOUND_SLASH_URL = Paths.get("").toAbsolutePath().getParent()  +  "/res/sounds/button_sound.wav";
     
     
     /*Image Paths*/
-    final String MENU_IMAGE_URL =  "res/main_menu_temp.jpg";
-    final String SETTINGS_IMAGE_URL =  "res/settings_menu.jpeg";
+    final String MENU_IMAGE_URL =  Paths.get("").toAbsolutePath().getParent()  + "/res/main_menu_temp.jpg";
+    final String SETTINGS_IMAGE_URL = Paths.get("").toAbsolutePath().getParent()  +  "/res/settings_menu.jpeg";
     
 	/*Loading Spritesheets.*/
-	final SpriteSheet DESERT_SHEET = new SpriteSheet( "res/desert_res_orig.png");
-	final SpriteSheet PORTAL_SHEET = new SpriteSheet("res/porotals.png");
-	final SpriteSheet PLAYER_SHEET = new SpriteSheet( "res/jaden_yuki_2.png");
+	final SpriteSheet DESERT_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent()  +  "/res/desert_res_orig.png");
+	final SpriteSheet PORTAL_SHEET = new SpriteSheet(Paths.get("").toAbsolutePath().getParent()  + "/res/porotals.png");
+	final SpriteSheet PLAYER_SHEET = new SpriteSheet( Paths.get("").toAbsolutePath().getParent() + "/res/jaden_yuki_2.png");
 	
 	/*Loading Sprites*/
 	final Sprite DESERT_TILE_1 = new Sprite(DESERT_SHEET, 0, 0, 64, 32);
@@ -102,7 +102,7 @@ public class Game {
 		colorMap.put( 0xff0032ff, new Tile(0, PORTAL_TILE_1, true));
 		colorMap.put( 0xff8e4a4a, new Tile(0, DESERT_TILE_1, false));
 		
-		String mapPath = "res/map4.png";
+		String mapPath =  Paths.get("").toAbsolutePath().getParent()  +  "/res/map4.png";
 		Map map = new Map(mapPath, colorMap);
 		
 		return new GameScene(GameEngine.GetWidth(), GameEngine.GetHeight(), map, player);

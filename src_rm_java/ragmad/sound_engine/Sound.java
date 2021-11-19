@@ -51,6 +51,8 @@ public class Sound extends Thread {
 	}
 
 	boolean continous;
+
+	private File currentFS;
 	
 	
 	
@@ -82,7 +84,7 @@ public class Sound extends Thread {
 		if(clip != null)	
 			clip.stop();
 		
-		this.openAudio(currentPath, delay);
+		this.openAudio( delay);
 	}
 
 
@@ -92,21 +94,19 @@ public class Sound extends Thread {
 	 * @param ms
 	 */
 	
-	public void openAudio(String path, long ms) {
+	public void openAudio(long ms) {
 		try {
 
 			clip = AudioSystem.getClip();
 			Thread.sleep(ms);
-			File audioFile = new File(path);
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(audioFile);
+			//File audioFile = new File(path);
+			AudioInputStream audioInput = AudioSystem.getAudioInputStream(this.currentFS);
 			clip.open(audioInput);
 			clip.start();
 			clipRunning = true;
 			if(continous)
 				clip.loop(clip.LOOP_CONTINUOUSLY);
-			
 		} catch (Exception e) {
-			System.out.println("File not found: " + path);
 			e.printStackTrace();
 		}
 	}
@@ -118,12 +118,12 @@ public class Sound extends Thread {
 	 * @param delay
 	 * @param continous
 	 */
-	public void updateAudio(String currentPath, long delay, boolean continous) {
+	public void updateAudio(File fs, long delay, boolean continous) {
 		synchronized (this)
         {
 			this.continous = continous;
 			update = true;
-			this.currentPath = currentPath;
+			this.currentFS = fs;
 			this.delay = delay;
 		 
         }

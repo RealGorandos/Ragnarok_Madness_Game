@@ -33,7 +33,7 @@ public class MainMenu implements Scene {
 	
 	private Choice[] options;
 	private Sound music;
-	
+	private File themSong;
 
 	/**
 	 * Initializes the main menu scene
@@ -57,6 +57,7 @@ public class MainMenu implements Scene {
 		Image img = null;
 		System.out.println(url);
 		try{
+			 this.themSong = new File(themeSong);
 			 img = ImageIO.read(new File(url));
 			 backgroundImage.getGraphics().drawImage( img, 0, 0 , m_width, m_height, null); // Storing the background image in the buffer.
 		}catch(Exception e) {
@@ -67,7 +68,7 @@ public class MainMenu implements Scene {
 		
 		initOptions(options, optionSounds);
 		if(GameEngine.GetSoundEngine() != null) {
-			GameEngine.GetSoundEngine().updateAudio(themeSong, 1000, true);
+			GameEngine.GetSoundEngine().updateAudio(this.themSong, 1000, true);
 		}
 	}
 	 
@@ -136,17 +137,17 @@ public class MainMenu implements Scene {
 	private void buttonClicked(int choice) {
 		switch(choice) {
 		case 0:
-			if(GameEngine.GetSoundEngine() != null) 
-				GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
-
-			GameEngine.ChangeScene("GameScene");
+			//Change into Settings
+			if(GameEngine.GetSoundEngine() != null)
+				GameEngine.GetSoundEngine().updateAudio(options[0].buttonSound, 0,false);
 			
+			GameEngine.ChangeScene("GameScene"); 
 			break;
 		case 1:
 			//Change into Settings
 			if(GameEngine.GetSoundEngine() != null)
-				GameEngine.GetSoundEngine().updateAudio(MusicClips.BUTTON.toString(), 0,false);
-			
+				GameEngine.GetSoundEngine().updateAudio(options[1].buttonSound, 0,false);
+			 
 			GameEngine.ChangeScene("Settings");
 			break;
 		case 2:  

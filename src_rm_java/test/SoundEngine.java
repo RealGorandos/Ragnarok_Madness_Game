@@ -6,6 +6,9 @@ import ragmad.sound_engine.Sound;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
+import java.io.File;
+import java.io.IOException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +20,8 @@ public class SoundEngine {
         try{
             MusicClips MAINMENU = new MusicClips ("res/sounds/got.wav");
             Sound sound = new Sound();
-            sound.openAudio(MAINMENU.toString(), 0);
+            sound.updateAudio(new File(MAINMENU.toString()), 0, false);
+            sound.openAudio(0);
             assertTrue(sound.isClipRunning());
         }catch(Exception e){
             System.out.println("[WARNING] Can't interpret the given .wav format on this machine. Or Can't file the given music file");
@@ -30,7 +34,8 @@ public class SoundEngine {
          try{
             MusicClips MAINMENU = new MusicClips ("res/sounds/got.wav");
             Sound sound = new Sound();
-            sound.openAudio(MAINMENU.toString(), 0);
+            sound.updateAudio(new File(MAINMENU.toString()), 0, false);
+            sound.openAudio(0);
             sound.pauseSound();
             assertFalse(sound.isClipRunning());
         }catch(Exception e){
