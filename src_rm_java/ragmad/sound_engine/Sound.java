@@ -90,7 +90,6 @@ public class Sound extends Thread {
 
 	/**
 	 * Opens the audio
-	 * @param path file path of the music clip
 	 * @param ms
 	 */
 	
@@ -114,7 +113,7 @@ public class Sound extends Thread {
 
 	/**
 	 * updates the audio to a new one
-	 * @param currentPath
+	 * @param fs
 	 * @param delay
 	 * @param continous
 	 */
