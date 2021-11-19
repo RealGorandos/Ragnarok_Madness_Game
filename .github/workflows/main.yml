@@ -40,10 +40,6 @@ jobs:
           cd ..
           cd ..
         
-        
-      - name: Generating report of the Static Analyzer
-        run: mvn site
-        
         # Runs a set of commands using the runners shell
       - name: Compiling, Testing and Packaging with 1 maven step.
         run: mvn --batch-mode --update-snapshots verify
@@ -52,7 +48,40 @@ jobs:
         run : |
           cd bin/
           ls -a
+          
+          
+  report-generation:
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [macOS-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Downloading the Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'maven'
         
+      - name: Generating report of the Static Analyzer
+        run: mvn site
+        
+      - name : Checking if Report is created
+        run : |
+          cd bin/site/
+          ls -a
+        
+      - name : Creatig artifact for javadocs
+        uses: actions/upload-artifact@v2
+        with:
+            name: report-artifact
+            path: bin/site
+
   javadoc-generation:
     runs-on: ${{ matrix.os }}
     strategy:
