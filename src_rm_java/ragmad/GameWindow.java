@@ -30,9 +30,11 @@ public class GameWindow extends JFrame{
 		this.gc = new GameCanvas(this.w_width, this.w_height);
 		 
 		/*Initializing the frame values*/
+		this.setSize(new Dimension(this.w_width, this.w_height));
+		this.setMinimumSize(new Dimension(this.w_width, this.w_height));
 		this.setPreferredSize(new Dimension(this.w_width, this.w_height)); // Setting window size
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Closing the window if the "x" button is pressed
-		this.setTitle("Running!"); // Window Title
+		this.setTitle("Ragnarok Madness Game and Engine Demo!"); // Window Title
 		this.setResizable(false); // The Window should not be resizable.
 		//this.setLocationRelativeTo(null); // Centering the window	
 		this.setVisible(true); // Making the window visible
@@ -42,7 +44,6 @@ public class GameWindow extends JFrame{
 		this.gc.addMouseListener(new Mouse());
 		this.gc.addMouseMotionListener(new Mouse());
 		this.add(gc);
-		this.pack();
 	}
 
 	

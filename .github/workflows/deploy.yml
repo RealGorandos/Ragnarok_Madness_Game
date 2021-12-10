@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy
+on:
+  push:
+    branches: [master ]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [ubuntu-latest] 
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Downloading the Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'maven'
+          
+      - name: Check resource
+        run : | 
+          cd res
+          ls
+          cd sounds 
+          echo sound files are:
+          ls
+          cd ..
+          cd ..
+        
+        # Runs a set of commands using the runners shell
+      - name: Compiling, Testing and Packaging with 1 maven step.
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: check build exists
+        run : |
+          cd bin/
+          ls -a         
+
+
+      - name: Archive files
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip
+          zip -r archive.zip bin/ragnarok-madness.jar res
+          
+      - name: Upload to gdrive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.CREDENTIALS }}
+          filename: "archive.zip"
+          folderId: "1WWuRuRJs5xWzqpL-4-UXZm4yYPCz3QWZ"
+          name: "ragnorarok_build_v1.${{ github.run_number }}.commit-number:${{ github.sha }}.zip" # optional string
+          overwrite: "false" # optional boolean
+      
+      - name: Output the link of the google drive
+        run: echo "The link to the game is https://drive.google.com/drive/folders/1WWuRuRJs5xWzqpL-4-UXZm4yYPCz3QWZ?usp=sharing"
+
+      

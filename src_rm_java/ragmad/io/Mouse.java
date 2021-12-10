@@ -55,5 +55,9 @@ public class Mouse implements MouseListener,MouseMotionListener {
 		y = e.getPoint().y;
 	}
 	//Mouse Clear Method
-
+	public static void ClearMouse() {
+		buttonNum = -1;
+		x = -1;
+		y = -1;
+	}
 }

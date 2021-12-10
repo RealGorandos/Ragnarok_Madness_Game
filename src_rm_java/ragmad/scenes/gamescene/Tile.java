@@ -14,32 +14,18 @@ public class Tile {
 	private boolean solid;
 	private Sprite sprite;
 	
-	
-	
 	/*These are the normalized base tile height and width. Change it if you want to have anotehr system in your rendering process.*/
 	public static final int TILE_WIDTH = 64;
 	public static final int TILE_HEIGHT = 32;
 	
-	
-	
-	
-	public static Tile PLAYER ;//= new Tile(0, Sprite.PLAYER_TILE_BACK_1, false);
-	/*public static Tile PLAYER2 = new Tile(0, Sprite.PLAYER_TILE_BACK_2, false);
-	public static Tile PLAYER3 = new Tile(0, Sprite.PLAYER_TILE_BACK_3, false);
-	public static Tile PLAYER4 = new Tile(0, Sprite.PLAYER_TILE_BACK_4, false);
-	public static Tile PLAYER5 = new Tile(0, Sprite.PLAYER_TILE_BACK_5, false);
-	public static Tile PLAYER6 = new Tile(0, Sprite.PLAYER_TILE_BACK_6, false);*/
-	/*public static Tile PLAYER7 = new Tile(0, Sprite.PLAYER_TILE_BACK_7, false);
-	public static Tile PLAYER8 = new Tile(0, Sprite.PLAYER_TILE_BACK_8, false);
-	public static Tile PLAYER9 = new Tile(0, Sprite.PLAYER_TILE_BACK_9, false);
-	public static Tile PLAYER10 = new Tile(0, Sprite.PLAYER_TILE_BACK_10, false);*/
-	//public static Tile PLAYER8 = new Tile(0, Sprite.PLAYER_TILE_BACK_4, false);
-
-
-	
-	
-	
 	// _________________________________ Constructors area _____________________________________________
+	
+	/**
+	 * Creates a tile. A tile is a piece of earth used to render the environment map
+	 * @param zHeight - height of hte tile (z axis)
+	 * @param sprite - Tile Sprite
+	 * @param solid - whether it is collidable or not.
+	 */
 	public Tile( int zHeight, Sprite sprite, boolean solid){
 		this.zCord = zHeight;
 		this.solid = solid;
@@ -142,7 +128,7 @@ public class Tile {
 	 */
 	private void renderBlock (Sprite sprite, int xCord, int yCord, int xOffset, int yOffset, int SCALING) {
 		int zPixels = zCord * SCALING; // should also response with the scaling factor
-		
+		 
 		int[] outputPixels = GameEngine.GetPixels();
 		int[] tilePixels = sprite.getPixels();
 		
@@ -174,10 +160,10 @@ public class Tile {
 			/*Height boundaries checking*/
 			if( yy >= GameEngine.GetHeight()) 
 				break;
-			
+			 
 			for(int x = 0 ; x < s_width; x++) {
 				int col = tilePixels[ x/SCALING + (y/SCALING) * sprite.getWidth() ];
-				int xx = x + xPixel;
+				int xx = x + xPixel; 
 				
 				/*width boundaries checking*/
 				if ( xx >= GameEngine.GetWidth() ) // break if the renderer pointer has exited screen right side

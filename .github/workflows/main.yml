@@ -1,3 +1,4 @@
+
 # This is a basic workflow to help you get started with Actions
 
 name: Ragnarok Madness CI and CD
@@ -5,9 +6,9 @@ name: Ragnarok Madness CI and CD
 # Controls when the workflow will run
 on:
   push:
-    branches: [ master,extra-tool2 ]
+    branches: [ master]
   pull_request:
-    branches: [ master ,extra-tool2]
+    branches: [ master]
   workflow_dispatch:
 
 
@@ -16,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-            os: [macOS-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
+            os: [ubuntu-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -54,7 +55,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-            os: [macOS-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
+            os: [ubuntu-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -86,7 +87,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-            os: [macOS-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
+            os: [ubuntu-latest] # macOS was chosen because of how the runner interprets the file paths. File paths are having problems when used in other runners. 
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -109,5 +110,5 @@ jobs:
       - name : Creatig artifact for javadocs
         uses: actions/upload-artifact@v2
         with:
-            name: github-actions-artifact
+            name: javadoc-artifact
             path: docs

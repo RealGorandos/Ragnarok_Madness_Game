@@ -11,78 +11,84 @@ import ragmad.scenes.gamescene.Map;
 import ragmad.scenes.gamescene.Tile;
 
 public abstract class Characters extends Entity {
-	public Sprite sprites;
+	public boolean blocked;
 	protected Direction direction;
 	protected boolean isMoving = false;	
+	protected double xCord, yCord;
+	protected double speed;
+	protected Map map;
+	protected int health;
+	protected GameScene scene;
 	
 	
-	
-
 	
 	/**
-	 * Takes care if the movement of the character.
-	 * @param dirX the offset which will update the x motion
-	 * @param dirY the offset which will update the x motion
-	 * @param colorsMap A hash map of colors which returns tile
-	 * @param sprites sprites object which update the sprite of the player
-	 * */
-	public void move(int dirX, int dirY, Map map, HashMap<Integer, Tile> colorsMap, Sprite sprites) {
-		this.sprites = sprites;
+	 * synchronizes the raster coordinates attached to the current entity with the its coordinate space
+	 * @param xOffset - If an offset is applicable (offset to the result)
+	 * @param yOffset - If an offset is applicable (offset to the result)
+	 */
+	protected void setRasterPosFromCord(int xOffset, int yOffset) {
+		double normal_height =  Tile.TILE_HEIGHT*GameScene.SCALING;
+		double normal_width = Tile.TILE_WIDTH*GameScene.SCALING;
+		double n_width_half = normal_width / 2;
+		double n_height_half = normal_height / 2;
 		
-		if(dirX > 0) direction = Direction.RIGHT;
-		if(dirY > 0) direction = Direction.DOWN;
-		if(dirX < 0) direction = Direction.LEFT;
-		if(dirY < 0) direction = Direction.UP;
-		if(dirX > 0 && dirY > 0) direction = Direction.DOWN_RIGHT;
-		if(dirX < 0 && dirY > 0) direction = Direction.DOWN_LEFT;
-		if(dirX < 0 && dirY < 0) direction = Direction.UP_LEFT;
-		if(dirX > 0 && dirY < 0) direction = Direction.UP_RIGHT;
+		/*Foe pixel coordinates*/
+		this.x = -(xCord + yCord) * n_width_half + xOffset; //this.curSprite.getWidth()/2;
+		this.y  = (xCord - yCord) * n_height_half + yOffset; //this.curSprite.getHeight()/3;
+	}
+	
+	
+	/**
+	 * Move the character (Entity) with the given directions. You need to normalized dirX and dirY before calling this funciton. 
+	 * @param dirX - normalized x direction.
+	 * @param dirY - normalized y direction.
+	 */
+	public void move(double dirX, double dirY){
+		if(dirX < 0) direction = Direction.UP_RIGHT;
+		if(dirY < 0) direction = Direction.DOWN_RIGHT;
+		if(dirX > 0) direction = Direction.DOWN_LEFT;
+		if(dirY > 0) direction = Direction.UP_LEFT;
+		if(dirX > 0 && dirY < 0) direction = Direction.DOWN;
+		if(dirX < 0 && dirY < 0) direction = Direction.RIGHT;
+		if(dirX > 0 && dirY > 0) direction = Direction.LEFT;
+		if(dirX < 0 && dirY > 0) direction = Direction.UP;
 		
+		this.xCord += this.speed*dirX;
+		this.yCord += this.speed*dirY;
+		
+		/*Checking for collision*/
+		boolean solid = false;
+		boolean outbounds = (int)this.xCord < 0 || (int)this.xCord >= this.map.getWidth() || (int)this.yCord < 0 || (int)this.yCord >= this.map.getHeight();
+		if( !outbounds) {
+			int id = this.map.getMap()[(int)this.xCord + (int)this.yCord*this.map.getWidth()];
+			solid = this.map.getTile(id).isSolid();
+		} 
+		
+		/*Moving the Foe.*/
+		if(!solid) {
+			this.isMoving = true;
+		}else {
+			this.xCord -= this.speed*dirX;
+			this.yCord -= this.speed*dirY;
+		}
+	}
+	
+	
+	public double getX() {return this.x; }
+	public double getY() {return this.y; }
+	public double getXCord() {return this.xCord;}
+	public double getYCord() {return this.yCord;}
+	public Direction getDirection() {return direction;}
+	public void setMap(Map map) { this.map = map;}
+	public void setHealth(int health) { this.health = health;}
+	
+	public int getHealth() {return this.health;}
  
-		double temp = Math.sqrt(dirX*dirX + dirY*dirY);
-		
-		double modifiedDirX = (3 * dirX/temp);
-		
-		double modifiedDirY = (3* dirY/temp);
-		
-		if(!collision( 0,  modifiedDirY, map, colorsMap)) {
-			
-			GameScene.yOffset += modifiedDirY ;
-		}
-		
-		if(!collision( 2 * modifiedDirX,  0, map, colorsMap)) {
-			GameScene.xOffset += modifiedDirX;
-		}
+	public void hit(int damage) {
+		System.out.println("Character hit with daamge: " + damage);
+		this.health -= damage;
+		this.health = Math.max(this.health, 0); // clamping
 	}
 	
-	
-	
-	public void update() {}
-	
-	
-	/**
-	 * Method which returns if a tile is collidable or not
-	 * @param dirX the pixels which need to be checked before moving on x-axis
-	 * @param dirY the pixels which need to be checked before moving on y-axis
-	 * @param map it stores the worlds map
-	 * @param colorsMap A hash map of colors which returns tile
-	 * */
-	public boolean collision(double dirX, double dirY, Map map, HashMap<Integer, Tile> colorsMap) {
-		boolean solid = false;		
-		int playerWidth = sprites.getWidth() ;
-		int playerHeight = sprites.getHeight();
-
-		int[] n = map.getTileAt(-x ,-y , (int)(GameScene.xOffset - (playerWidth/2) + dirX),(int) (GameScene.yOffset -  (playerHeight - 14)  + dirY));
-		if(n != null) {
-			if( map.tileExists(n[0], n[1])) {
-				solid = colorsMap.get(map.getMap()[(n[0])+ (n[1])*map.getWidth()]).isSolid();
-				}
-			}
-		return solid;
-	}
-	
-	
-	public Direction getDirection() {
-		return direction;
-	}
 }

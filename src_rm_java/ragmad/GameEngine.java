@@ -2,8 +2,11 @@ package ragmad;
 
 import java.nio.file.Paths;
 
+import javax.swing.JOptionPane;
+
 import ragmad.graphics.sprite.Sprite;
 import ragmad.io.Keyboard;
+import ragmad.io.Mouse;
 import ragmad.scenes.Scene;
 import ragmad.scenes.gamescene.GameScene;
 import ragmad.scenes.gamescene.Tile;
@@ -18,7 +21,7 @@ public class GameEngine implements Runnable {
 
 	private GameWindow window;
 
-
+	private static boolean gameover;
 
 	private static Scene currentScene;
 	static MainMenu menu;
@@ -84,6 +87,12 @@ public class GameEngine implements Runnable {
 	private void update() {
 		this.currentScene.update();
 		this.window.update();
+		Mouse.ClearMouse();
+		
+		if(gameover) {
+			JOptionPane.showMessageDialog(this.window, "You have died!", "Game Over" , JOptionPane.ERROR_MESSAGE);
+			running = false;
+		}
 	}
 	
 	
@@ -91,11 +100,10 @@ public class GameEngine implements Runnable {
 	 * A rendering function called per frame
 	 */
 	private synchronized void render() {
+		
 		for(int i = 0 ;i < pixels.length ; i++) {pixels[i] = 0xff87CEEB;}
-		
 		currentScene.render(); 
-		
-		this.window.render(); // draw the pixels that we have currently to the window
+		this.window.render(); 
 	}
 	
 	
@@ -143,6 +151,7 @@ public class GameEngine implements Runnable {
 				ups = 0;
 			}
 		 }
+		System.exit(0);
 	}
 	
 	
@@ -228,5 +237,9 @@ public class GameEngine implements Runnable {
 	 * @return an instance of the current scene
 	 */
 	public static Scene getCurrentScene() {return currentScene;}
+	
+	public static void EndGame() {
+		gameover = true;
+	}
 }
 //remove getParent()

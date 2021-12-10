@@ -62,7 +62,7 @@ public class MainMenu implements Scene {
 			 backgroundImage.getGraphics().drawImage( img, 0, 0 , m_width, m_height, null); // Storing the background image in the buffer.
 		}catch(Exception e) {
 			System.out.println("File does not exist" + url);
-
+ 
 			return;
 		}
 		

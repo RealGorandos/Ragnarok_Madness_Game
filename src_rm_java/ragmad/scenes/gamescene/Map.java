@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import ragmad.GameEngine;
+import ragmad.entity.item.Item;
 import ragmad.graphics.sprite.Sprite;
 
 
@@ -24,12 +25,15 @@ public class Map {
 	private int tileWidth, tileHeight;
 	
 
-	//map is given in the constructor
+	/**
+	 * Creating a map.
+	 * @param path - Paths of the map IDs
+	 * @param hm - Hashmap which defines the ID and Tile relation.
+	 */
 	public Map(String path, HashMap hm) {
 		this.path = path;
 		this.tileWidth = Tile.TILE_WIDTH;
 		this.tileHeight = Tile.TILE_HEIGHT;
-		
 		
 		try {
 			BufferedImage mapImage = ImageIO.read(new File(path)); 	// Loading an image to the memory
@@ -48,15 +52,7 @@ public class Map {
 
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**Creates a map for testing purposes. This should never be used in real application*/
 	public Map() {
 		this.width = 0;
 		this.height = 0;
@@ -81,7 +77,7 @@ public class Map {
 	 * @param yOffset how much the scene has moved in y direction
 	 * @return exact tile at that location
 	 */
-	public int[] getTileAt(int mouseX,int mouseY, int xOffset, int yOffset) {
+	public int[] getTileAt(int mouseX, int mouseY, int xOffset, int yOffset) {
         //	half width, height... MUST BE SUBSTITUTED PROPERLY
         var tileWidth = (this.tileWidth * GameScene.SCALING) >> 1; 
         var tileHeight = (this.tileHeight * GameScene.SCALING) >> 1;
@@ -188,8 +184,6 @@ public class Map {
 	    return null;
 	}
 	
-	
-	
 
 	/// ________________________________ GETTERS AREA ___________________________
 
@@ -201,7 +195,7 @@ public class Map {
 	 */
 	public boolean tileExists(int x, int y) {return x >= 0 & y >= 0 & x < width & y < height;}
 
-	public int getTileYIncrementByTileZ(int tileZ) {return 0;} // Might be needed in the getTileAt() function
+	public int getTileYIncrementByTileZ(int tileZ) {return tileZ;} // Might be needed in the getTileAt() function
 	public int[] getMap() {return this.map;}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
@@ -224,6 +218,12 @@ public class Map {
 	 * @return return tile type
 	 */
 	public Tile getTile(Integer color){ return this.hashmap.get(color); }
+	
+	/**@return - Returns the tile width*/
+	public int getTileWidth() {return this.tileWidth;}
+	
+	/**@return - Returns the tile height*/
+	public int getTileHeight() {return this.tileHeight;}
 	
 }
 
