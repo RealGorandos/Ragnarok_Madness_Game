@@ -22,8 +22,14 @@ import ragmad.scenes.settingsscene.Settings;
  *
  */
 public class Game {
-	/*Sound Paths*/
-    final String MUSIC_GOT_URL = Paths.get("").toAbsolutePath().getParent()  + "/res/sounds/got.wav";
+//	/*Sound Paths*/
+final String MUSIC_GOT_URL = Paths.get("").toAbsolutePath().getParent()  + "/res/sounds/intro.wav";
+//For copyright:-
+//	Credits (please copy paste)
+//	Music: TheFatRat & Everen Maxwell - Warbringer (feat. Lindsey Stirling)
+//	Watch the official music video: https://youtu.be/qvH70pJFKps
+//	Listen here: https://lnk.to/tfrwarbringeryt
+    
     final String SOUND_SLASH_URL = Paths.get("").toAbsolutePath().getParent()  +  "/res/sounds/button_sound.wav";
     
     
