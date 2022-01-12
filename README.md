@@ -1,6 +1,8 @@
 # Ragnarok Madness Porject
 Inspired from games such as <strong>Disgaea</strong>, our team, compramised of 3 developers, decided to create an isometric game with its engine from scratch. Mainly this project was developed to accomplish the course "Tools of Software techrnology" at the university of ELTE (Eötvös Loránd University). In this course you are required to create some application considering many aspects, such as CI, CD, teamwork, and opensource project developement. 
 
+![image](https://user-images.githubusercontent.com/84874186/149052480-e93eb3ee-f20a-4f1a-8677-83ec4cedd1cf.png)
+
 
 # Controls
 This is a simple demo showing the capabilities of our Game Engine and what it can achieve. Down below, we will explain on how to create your own simple isometric game based on the "Ragnarok Game Engine". However, in this section we will explain the basic game controls and rules. 
