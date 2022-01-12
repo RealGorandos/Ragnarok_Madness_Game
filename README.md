@@ -3,6 +3,11 @@ Inspired from games such as <strong>Disgaea</strong>, our team, compramised of 3
 
 ![image](https://user-images.githubusercontent.com/84874186/149052480-e93eb3ee-f20a-4f1a-8677-83ec4cedd1cf.png)
 
+![image](https://user-images.githubusercontent.com/84874186/149052653-3f91040e-cefa-445d-bf49-4dafaf66246f.png)
+
+![image](https://user-images.githubusercontent.com/84874186/149052775-6d923e63-1e51-4767-bd74-4b1f62338b69.png)
+
+
 
 # Controls
 This is a simple demo showing the capabilities of our Game Engine and what it can achieve. Down below, we will explain on how to create your own simple isometric game based on the "Ragnarok Game Engine". However, in this section we will explain the basic game controls and rules. 
